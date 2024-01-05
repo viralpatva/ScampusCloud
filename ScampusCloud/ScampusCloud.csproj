@@ -224,6 +224,7 @@
     <Content Include="assets\plugins\global\fonts\socicon\socicon.svg" />
     <Content Include="assets\plugins\global\plugins.bundle.css" />
     <Content Include="assets\plugins\global\plugins.bundle.js" />
+    <Content Include="Connection\ConnectionString.txt" />
     <Content Include="Content\Site.css" />
     <Content Include="Global.asax" />
     <Content Include="Images\loading-squre.gif" />
@@ -243,6 +244,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
     <Compile Include="Utility\common.cs" />
+    <Compile Include="Utility\ErrorLogger.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />
