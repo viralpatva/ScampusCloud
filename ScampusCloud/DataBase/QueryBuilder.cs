@@ -13,6 +13,15 @@ namespace ScampusCloud.DataBase
         private string _tableName = string.Empty;
         private List<FieldValue> _fieldValueCollection = new List<FieldValue>();
         private string _storedProcedureName = string.Empty;
+        public enum QueryType
+        {
+            INSERT = 1,
+            UPDATE = 2,
+            DELETE = 3,
+            SELECT = 4
+        }
+
+        public Enum SetQueryType;
         #endregion
 
         #region properties

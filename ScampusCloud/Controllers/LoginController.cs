@@ -1,4 +1,5 @@
-﻿using ScampusCloud.Repository.Login;
+﻿using ScampusCloud.Models;
+using ScampusCloud.Repository.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace ScampusCloud.Controllers
     {
         #region Variable Declaration
         private readonly LoginRepository _loginRepository;
+        LoginModel _LoginModel = new LoginModel();
         #endregion
 
         #region CTOR
@@ -24,8 +26,23 @@ namespace ScampusCloud.Controllers
         // GET: Login
         public ActionResult Login()
         {
-            
-            return View();
+            return View(_LoginModel);
+        }
+        [HttpPost]
+        public ActionResult Login(LoginModel _LoginModel)
+        {
+
+            var officemaster = _loginRepository.Get_User(_LoginModel);
+
+            if (officemaster == null)
+            {
+                return RedirectToAction("Login");
+            }
+            else
+            {
+                return RedirectToAction("Login");
+            }
+                
         }
         #endregion
     }

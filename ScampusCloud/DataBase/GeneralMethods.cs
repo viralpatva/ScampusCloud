@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 
 namespace ScampusCloud.DataBase
@@ -182,8 +184,7 @@ namespace ScampusCloud.DataBase
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        DBExtension _DBExtension = new DBExtension();
-                        return _DBExtension.ToEntity<T>(dt);
+                        return DBExtension.ToEntity<T>(dt);
                     }
                 }
             }
@@ -251,8 +252,7 @@ namespace ScampusCloud.DataBase
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        DBExtension _DBExtension = new DBExtension();
-                        return _DBExtension.ToList<T>(dt);
+                        return DBExtension.ToList<T>(dt);
                     }
                 }
 
@@ -293,8 +293,7 @@ namespace ScampusCloud.DataBase
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        DBExtension _DBExtension = new DBExtension();
-                        return _DBExtension.ToList<T>(dt);
+                        return DBExtension.ToList<T>(dt);
                     }
                 }
             }
@@ -397,8 +396,7 @@ namespace ScampusCloud.DataBase
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        DBExtension _DBExtension = new DBExtension();
-                        return _DBExtension.ToEntity<T>(dt);
+                        return DBExtension.ToEntity<T>(dt);
                     }
                 }
 
@@ -552,8 +550,7 @@ namespace ScampusCloud.DataBase
                         DataTable dt = new DataTable();
                         da.Fill(dt);
 
-                        DBExtension _DBExtension = new DBExtension();
-                        return _DBExtension.ToList<T>(dt);
+                        return DBExtension.ToList<T>(dt);
                     }
                 }
 
@@ -570,6 +567,411 @@ namespace ScampusCloud.DataBase
                 if (conn.State != ConnectionState.Closed)
                     conn.Close();
             }
+        }
+        #endregion
+        #region SQL Operation using SP
+
+        public List<T> GetListUsingSp<T>(QueryBuilder objQueryBuilder, bool IsCloudConnection = false) where T : new()
+        {
+            try
+            {
+                using (var conn = new SqlConnection(GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 300;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        using (var da = new SqlDataAdapter(cmd))
+                        {
+                            using (var dt = new DataTable())
+                            {
+                                OpenConnection(conn);
+                                da.Fill(dt);
+                                return DBExtension.ToList<T>(dt);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+                //if (_conn.State == ConnectionState.Open)
+                //{
+                //    _conn.Close();
+                //    _conn.Dispose();
+                //}
+                //_da.Dispose();
+                //_dt.Dispose();
+            }
+
+        }
+
+        public string ExcecuteScalarUsingSp(QueryBuilder objQueryBuilder, bool IsCloudConnection = false)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        OpenConnection(conn);
+                        return Convert.ToString(cmd.ExecuteScalar());
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+                //if (_conn.State == ConnectionState.Open)
+                //{
+                //    _conn.Close();
+                //    _conn.Dispose();
+                //}
+                //_objCmd.Dispose();
+            }
+
+        }
+
+        public bool ExcecuteBoolUsingSp(QueryBuilder objQueryBuilder, bool IsCloudConnection = false)
+        {
+            try
+            {
+
+                using (var conn = new SqlConnection(GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        OpenConnection(conn);
+                        string strVal = Convert.ToString(cmd.ExecuteScalar());
+                        if (strVal == string.Empty)
+                            return false;
+                        else
+                        {
+                            int intCnt = Convert.ToInt32(strVal);
+                            return intCnt != 0;
+                        }
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+                //if (_conn.State == ConnectionState.Open)
+                //{
+                //    _conn.Close();
+                //    _conn.Dispose();
+                //}
+                //_objCmd.Dispose();
+            }
+
+        }
+
+        public  T ExecuteObjectUsingSp<T>(QueryBuilder objQueryBuilder, bool IsSetupConnection = false) where T : new()
+        {
+            try
+            {
+                using (var conn = new SqlConnection(GetConnectionString(IsSetupConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        using (var da = new SqlDataAdapter(cmd))
+                        {
+                            using (var dt = new DataTable())
+                            {
+                                OpenConnection(conn);
+                                da.Fill(dt);
+                                return dt.ToEntity<T>();
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+                //if (_conn.State == ConnectionState.Open)
+                //{
+                //    _conn.Close();
+                //    _conn.Dispose();
+                //}
+                //_da.Dispose();
+                //_dt.Dispose();
+            }
+        }
+
+        public DataTable ExecuteDataTableUsingSp(QueryBuilder objQueryBuilder, bool IsCloudConnection = false)
+        {
+            try
+            {
+                using (var conn = new SqlConnection(GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        using (var da = new SqlDataAdapter(cmd))
+                        {
+                            using (var dt = new DataTable())
+                            {
+                                OpenConnection(conn);
+                                da.Fill(dt);
+                                return dt;
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+
+            }
+        }
+
+        public DataSet ExecuteDataSetUsingSp(QueryBuilder objQueryBuilder, bool IsCloudConnection = false)
+        {
+            try
+            {
+                DataSet ds = new DataSet();
+                using (var conn = new SqlConnection(GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        using (var da = new SqlDataAdapter(cmd))
+                        {
+                            OpenConnection(conn);
+                            da.Fill(ds);
+                            return ds;
+                        }
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+
+            }
+        }
+        public int ExecuteNonQueryUsingSp(QueryBuilder objQueryBuilder, List<FieldValue> lstWhereClause = null, bool IsCloudConnection = false, string SetupConnString = "")
+        {
+            try
+            {
+                using (var conn = new SqlConnection(!string.IsNullOrEmpty(SetupConnString) ? SetupConnString : GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        if (lstWhereClause != null)
+                        {
+                            foreach (var item in lstWhereClause)
+                            {
+                                cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                            }
+                        }
+                        OpenConnection(conn);
+                        return cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                return 0;
+            }
+            finally
+            {
+
+            }
+        }
+
+        public object ExecuteQurSpReturnObject(QueryBuilder objQueryBuilder, List<FieldValue> lstWhereClause, bool IsCloudConnection = false)
+        {
+            try
+            {
+                object objValue = null;
+                using (var conn = new SqlConnection(GetConnectionString(IsCloudConnection)))
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, conn))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        if (lstWhereClause != null)
+                        {
+                            foreach (var item in lstWhereClause)
+                            {
+                                cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                            }
+                        }
+                        OpenConnection(conn);
+                        objValue = cmd.ExecuteScalar();
+                    }
+                }
+
+                return objValue;
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+
+            }
+        }
+
+        public void ExecuteQurSpByConnection(QueryBuilder objQueryBuilder, List<FieldValue> lstWhereClause, SqlConnection Connenction)
+        {
+            try
+            {
+                using (var conn = Connenction)
+                {
+                    using (var cmd = new SqlCommand(objQueryBuilder.StoredProcedureName, Connenction))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        foreach (var item in objQueryBuilder.FieldValueCollection)
+                        {
+                            cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                        }
+                        if (lstWhereClause != null)
+                        {
+                            foreach (var item in lstWhereClause)
+                            {
+                                cmd.Parameters.AddWithValue(item.ColumnName, item.ColumnValue);
+                            }
+                        }
+                        OpenConnection(Connenction);
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (Exception oException)
+            {
+                StrQueryLog("SP Name :" + objQueryBuilder.StoredProcedureName, oException);
+                throw;
+            }
+            finally
+            {
+
+            }
+        }
+
+        public string GetQuery(QueryBuilder objQueryBuilder, List<FieldValue> lstWhereClause, bool IsCloudConnection = false)
+        {
+            var qryType = objQueryBuilder.SetQueryType;
+            string strQuery = string.Empty;
+            if (QueryBuilder.QueryType.INSERT.Equals(qryType))
+                strQuery = objQueryBuilder.InsertQuery();
+            else if (QueryBuilder.QueryType.UPDATE.Equals(qryType))
+                strQuery = objQueryBuilder.UpdateRecord(lstWhereClause);
+            else if (QueryBuilder.QueryType.DELETE.Equals(qryType))
+                strQuery = objQueryBuilder.DeleteRecord(lstWhereClause);
+            return strQuery;
+        }
+
+
+        private void OpenConnection(SqlConnection cn)
+        {
+            try
+            {
+                cn.Open();
+            }
+            catch (Exception ex)
+            {
+                string strInnerEx = string.Empty;
+                string method = MethodBase.GetCurrentMethod().Name;
+                if (ex.InnerException != null)
+                {
+                    strInnerEx = ex.InnerException.ToString();
+                }
+                //ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, strInnerEx, GetType().Name + " : " + method);
+
+            }
+        }
+
+        private void StrQueryLog(string strQuery, Exception qryex)
+        {
+            var method = MethodBase.GetCurrentMethod().Name;
+            if (qryex.InnerException != null)
+            {
+            }
+            //ErrorLogger.WriteToErrorLog(qryex.Message, qryex.StackTrace, strQuery, GetType().Name + " : " + method);
+        }
+
+
+        public string GetConnectionString(bool IsSetupConnection)
+        {
+            //if (string.IsNullOrEmpty(Startup.MasterDBConnectionString))
+            //{
+                string script = "", filepath = "";
+                FileInfo file;
+                filepath = Path.Combine(Database.GetRootPath(), $@"Connection\\ConnectionString.txt");
+                file = new FileInfo(filepath);
+                script = file.OpenText().ReadToEnd();
+                script = script.Replace("\r\n", " ").Replace("\t", " ");
+                //Startup.MasterDBConnectionString = script;
+            //}
+            return script;
         }
         #endregion
     }

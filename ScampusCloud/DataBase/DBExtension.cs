@@ -7,12 +7,12 @@ using System.Web;
 
 namespace ScampusCloud.DataBase
 {
-    public class DBExtension
+    public static class DBExtension
     {
-        public DBExtension()
-        {
+        //public DBExtension()
+        //{
 
-        }
+        //}
 
         /// <summary>
         /// 
@@ -20,7 +20,7 @@ namespace ScampusCloud.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="enumeration"></param>
         /// <param name="action"></param>
-        public void ForEach<T>(IEnumerable<T> enumeration, Action<T> action)
+        public static void ForEach<T>(IEnumerable<T> enumeration, Action<T> action)
         {
 
             foreach (T item in enumeration)
@@ -36,7 +36,7 @@ namespace ScampusCloud.DataBase
         /// <param name="varlist">list you want to convert it to Data Table</param>
         /// <param name="fn">Delegate Function to Create Row</param>
         /// <returns>Data Table That Represent List data</returns>
-        public DataTable ToADOTable<T>(IEnumerable<T> varlist, CreateRowDelegate<T> fn)
+        public static DataTable ToADOTable<T>(IEnumerable<T> varlist, CreateRowDelegate<T> fn)
         {
             DataTable toReturn = new DataTable();
 
@@ -82,7 +82,7 @@ namespace ScampusCloud.DataBase
         /// <typeparam name="T">Target Class</typeparam>
         /// <param name="varlist">list you want to convert it to Data Table</param>
         /// <returns>Data Table That Represent List data</returns>
-        public DataTable ToADOTable<T>(IEnumerable<T> varlist)
+        public static DataTable ToADOTable<T>(IEnumerable<T> varlist)
         {
             DataTable toReturn = new DataTable();
 
@@ -129,7 +129,7 @@ namespace ScampusCloud.DataBase
         /// <typeparam name="T">Target Class to convert data table to List of T </typeparam>
         /// <param name="datatable">Data Table you want to convert it</param>
         /// <returns>List of Target Class</returns>
-        public List<T> ConvertToList<T>(DataTable dt) where T : new()
+        public static List<T> ConvertToList<T>(DataTable dt) where T : new()
         {
             List<T> Temp = new List<T>();
             try
@@ -173,7 +173,7 @@ namespace ScampusCloud.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="rows"></param>
         /// <returns></returns>
-        public List<T> ConvertTo<T>(IList<DataRow> rows)
+        public static List<T> ConvertTo<T>(IList<DataRow> rows)
         {
             List<T> list = null;
             if (rows != null)
@@ -191,7 +191,7 @@ namespace ScampusCloud.DataBase
         /// <summary>
         /// Convert DataRow into T Object
         /// </summary>   
-        public T CreateItem<T>(DataRow row)
+        public static T CreateItem<T>(DataRow row)
         {
             string columnName;
             T obj = default(T);
@@ -230,7 +230,7 @@ namespace ScampusCloud.DataBase
         /// <typeparam name="T"></typeparam>
         /// <param name="table"></param>
         /// <returns></returns>
-        public List<T> ToList<T>(DataTable table)
+        public static List<T> ToList<T>(DataTable table)
         {
             if (table == null)
                 return null;
@@ -246,12 +246,15 @@ namespace ScampusCloud.DataBase
         /// <typeparam name="T">Target Class to convert data table to List of T </typeparam>
         /// <param name="datatable">Data Table you want to convert it</param>
         /// <returns>List of Target Class</returns>
-        public T ToEntity<T>(DataTable datatable) where T : new()
+        //public static T ToEntity<T>(DataTable datatable) where T : new()
+        //{
+        //    return ToList<T>(datatable).FirstOrDefault();
+        //}
+        public static T ToEntity<T>(this DataTable datatable) where T : new()
         {
             return ToList<T>(datatable).FirstOrDefault();
         }
-
-        public T getObject<T>(DataRow row, List<string> columnsName) where T : new()
+        public static T getObject<T>(DataRow row, List<string> columnsName) where T : new()
         {
             T obj = new T();
             try

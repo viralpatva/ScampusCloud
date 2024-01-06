@@ -1,11 +1,10 @@
-﻿
+﻿@model ScampusCloud.Models.LoginModel
 @{
     ViewData["Title"] = "Smart Campus - Login";
     Layout = "~/Views/Shared/_LoginLayout.cshtml";
 }
-
 <!--begin::Page Custom Styles(used by this page)-->
-@*<link href="~/assets/css/pages/login/login-1.css" rel="stylesheet" type="text/css" />*@
+
 <link href="~/assets/css/pages/login/login-5.css" rel="stylesheet" type="text/css" />
 <style>
     .psw-field {
@@ -21,7 +20,9 @@
     <!--begin::Signin-->
     <div class="login-form">
         <!--begin::Form-->
-        <form id="kt_login_singin_form" class="form" method="post">
+        @using (Html.BeginForm("Login", "Login", FormMethod.Post))
+        {
+            @*<form id="kt_login_singin_form" class="form" method="post">*@
             <!--begin::Title-->
             <div class="pb-5 pb-lg-15">
                 <h3 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Sign In</h3>
@@ -29,13 +30,16 @@
             <!--begin::Title-->
             <!--begin::Title-->
             <input type="hidden" asp-for="ReturnURL" />
-            
+
             <!--begin::Title-->
             <!--begin::Form group-->
             <div class="form-group">
                 <label class="font-size-h6 font-weight-bolder text-dark">Username</label>
-                <input asp-for="nvarUsername" class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" />
-                <span asp-validation-for="nvarUsername" class="text-danger"></span>
+                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg", @required = "required" })
+                @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
+
+                @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />
+                    <span asp-validation-for="nvarUsername" class="text-danger"></span>*@
 
             </div>
             <!--end::Form group-->
@@ -44,20 +48,25 @@
                 <div class="d-flex justify-content-between mt-n5">
                     <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
                 </div>
-                <input asp-for="nvarUsername" class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" />
-                <span asp-validation-for="nvarPassword" class="text-danger"></span>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg", @required = "required" })
+                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+
+                @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />
+                    <span asp-validation-for="nvarPassword" class="text-danger"></span>*@
                 <a href="javascript:;" onclick="Passwordshowhide(this)" class="psw-eyed psw-field"><i class="icon-xl fas fa-eye"></i></a>
                 <a href="javascript:;" onclick="Passwordshowhide(this)" class="psw-slash-eyed psw-field" style="display:none;"><i class="icon-xl fas fa-eye-slash"></i></a>
             </div>
             <!--end::Form group-->
             <div class="form-group">
                 <label class="checkbox mt-5">
-                    <input type="checkbox" asp-for="IsRemember" tabindex="3" /><div><span localize-content>Remember me</span></div>
+                    <input type="checkbox" asp-for="IsRemember" tabindex="3" />
+                    <div><span localize-content>Remember me</span></div>
                     <span></span>
                 </label>
                 <button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-0 float-right">Sign In</button>
             </div>
-        </form>
+            @*</form>*@
+        }
         <!--end::Form-->
     </div>
     <!--end::Signin-->
