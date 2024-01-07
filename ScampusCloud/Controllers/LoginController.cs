@@ -40,9 +40,19 @@ namespace ScampusCloud.Controllers
             }
             else
             {
-                return RedirectToAction("Login");
+                return RedirectToAction("Dashboad","Dashboad");
             }
                 
+        }
+
+        public ActionResult Logout()
+        {
+            //var redirectUrl = $"~/";
+            //Clear All Session Values
+            HttpContext.Session.Clear();
+            ////Clear All Cookie Values
+            //HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            return RedirectToAction("Login");
         }
         #endregion
     }

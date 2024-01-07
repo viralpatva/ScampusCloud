@@ -1,0 +1,279 @@
+﻿@{
+    @*@using Microsoft.AspNetCore.Http
+    @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor*@
+}
+
+<style>
+    .btn-datepicker {
+        line-height: 22px;
+    }
+
+    .fa-arrow-circle-right {
+        margin: 0;
+        padding: 0 !important;
+    }
+
+    .header-fixed.subheader-fixed .subheader {
+        height: 64px;
+    }
+
+    @@media (max-width:1099px) {
+        .btn.btn-datepicker {
+            font-size: 10px;
+        }
+    }
+
+    @@media (max-width: 991.98px) {
+        .header-fixed.subheader-fixed .subheader {
+            height: auto;
+        }
+    }
+</style>
+
+<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12 margin-bottom-15" style="text-align:right">
+    <div class="row">
+        <div class="col-lg-5 col-md-5 col-sm-12 d-flex justify-content-end mb-2">
+            <a href="javascript:;" class="btn btn-primary btn-sm font-weight-bold mr-0 btn-datepicker" id="kt_dashboard_daterangepicker" data-toggle="tooltip" data-placement="left">
+                <span class="opacity-60 font-weight-bold mr-2" id="kt_dashboard_daterangepicker_title">Today</span>
+                <span class="font-weight-bold" id="kt_dashboard_daterangepicker_date">
+                    @*@(HttpContextAccessor.HttpContext.Session.GetString("DefaultStartDate") + " - " +
+        HttpContextAccessor.HttpContext.Session.GetString("DefaultEndDate"))*@
+                </span>
+            </a>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 mb-2" id="hideStartTime">
+            <div class="input-group timepicker">
+                <input class="form-control" id="strDinnerStartTime" readonly placeholder="Select time" type="text" />
+                <div class="input-group-append">
+                    <span class="input-group-text btn-primary btn">
+                        <i class="la la-clock-o"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-3 col-sm-12 mb-2" id="hideEndTime">
+            <div class="input-group timepicker">
+                <input class="form-control" id="strDinnerEndTime" readonly placeholder="Select time" type="text" />
+                <div class="input-group-append">
+                    <span class="input-group-text btn-primary btn">
+                        <i class="la la-clock-o"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-1 col-md-1 col-sm-1 col-xs-2 pl-md-0 text-right">
+            <button onclick="SetDataAccDate(1)" class="btn btn-primary">
+                <i class="fa fa-arrow-circle-right"></i>
+            </button>
+        </div>
+    </div>
+
+</div>
+
+
+@*<input type="hidden" id="ConstFromDate" value="@HttpContextAccessor.HttpContext.Session.GetString("DefaultStartDate")" />
+<input type="hidden" id="ConstToDate" value="@HttpContextAccessor.HttpContext.Session.GetString("DefaultEndDate")" />
+<input type="hidden" id="DefaultStartTime" value="@HttpContextAccessor.HttpContext.Session.GetString("DefaultStartTime")" />
+<input type="hidden" id="DefaultEndTime" value="@HttpContextAccessor.HttpContext.Session.GetString("DefaultEndTime")" />
+<input type="hidden" id="WeekStartDay" value="@HttpContextAccessor.HttpContext.Session.GetString("WeekStartDay")" />*@
+
+
+<script type="text/javascript">
+    var SelectedStartDate = "";
+    var SelectedEndDate = "";
+    var SelectedCustomDate = "";
+    function SetDataAccDate(daterange) {
+        if (daterange == 1) {
+            daterange = "";
+            daterange = $('#kt_dashboard_daterangepicker_date').text();
+            daterange = daterange.split("-");
+            SelectedStartDate = daterange[0];
+            SelectedEndDate = daterange[1];
+
+            getSearchByAllvalueDynamic(SelectedStartDate, SelectedEndDate);
+        }
+        if (window.location.href.indexOf('Home/Index') > 0) {
+            //SetDate(daterange);
+            //DashoardData();
+        }
+        else {
+            SetDate(daterange);
+            getSearchByAllvalueDynamic(SelectedStartDate, SelectedEndDate);
+        }
+    }
+
+    function SetDatepicker() {
+        $('#strDinnerStartTime').timepicker({
+            //minuteStep: 1,
+            defaultTime: $('#DefaultStartTime').val(),
+            //showSeconds: true,
+            //showMeridian: false,
+            //snapToStep: true
+        });
+
+        $('#strDinnerEndTime').timepicker({
+            //minuteStep: 1,
+            defaultTime: $('#DefaultEndTime').val(),
+            //showSeconds: true,
+            //showMeridian: false,
+            //snapToStep: true
+        });
+    }
+    function formatDate(date) {
+        var monthNames = [
+            "Jan", "Feb", "Mar",
+            "Apr", "May", "Jun", "July",
+            "Aug", "Sep", "Oct",
+            "Nov", "Dec"
+        ];
+
+        var day = date.getDate();
+        var monthIndex = date.getMonth();
+        var year = date.getFullYear();
+
+        return monthNames[monthIndex] + ' ' + day + ' ' + year;
+    }
+
+    function SetDate(_datevalue) {
+        if (_datevalue == "Today") {
+            SelectedStartDate = formatDate(new Date($("#ConstFromDate").val()));
+            SelectedEndDate = formatDate(new Date($("#ConstToDate").val()));
+        }
+        else if (_datevalue == "Yesterday") {
+            var FDate = new Date($("#ConstFromDate").val());
+            FDate.setDate(FDate.getDate() - 1);
+
+            var TDate = new Date($("#ConstToDate").val());
+            TDate.setDate(TDate.getDate() - 1);
+
+            SelectedStartDate = formatDate(new Date(FDate));
+
+            SelectedEndDate = formatDate(new Date(TDate));
+
+        }
+        else if (_datevalue == "Last 7 Days") {
+            var today = new Date();
+
+            SelectedEndDate = formatDate(new Date($("#ConstFromDate").val()));
+            SelectedStartDate = formatDate(new Date(today.getTime() - 60 * 60 * 24 * 6 * 1000));
+
+        }
+        else if (_datevalue == "Last 30 Days") {
+            var today = new Date();
+
+
+            SelectedEndDate = formatDate(new Date($("#ConstFromDate").val()));
+            SelectedStartDate = formatDate(new Date(today.getTime() - 60 * 60 * 24 * 29 * 1000));
+
+        }
+        else if (_datevalue == "This Month") {
+
+            var curr_date = new Date();
+
+            SelectedStartDate = formatDate(new Date(curr_date.getFullYear(), curr_date.getMonth(), 1));
+
+            SelectedEndDate = formatDate(new Date(curr_date.getFullYear(), curr_date.getMonth() + 1, 0));
+        }
+        //else if (_datevalue == "Last Week") {
+
+        //    var curr_date = new Date();
+        //    var diff = curr_date.getDate() - 7;
+        //    var week_start_tstmpBase = curr_date.setDate(diff);
+        //    curr_date = new Date(week_start_tstmpBase);
+
+        //    var day = curr_date.getDay() - $("#WeekStartDay").val();
+        //    var date = curr_date.getDate() - day;
+
+        //    SelectedStartDate = new Date(curr_date.setDate(date));
+        //    SelectedEndDate = new Date(curr_date.getTime() + 60 * 60 * 24 * 6 * 1000);
+
+        //}
+        else if (_datevalue == "Last Month") {
+            var curr_date = new Date();
+            curr_date = new Date(curr_date.getFullYear(), curr_date.getMonth() - 1, 1);;
+
+            SelectedStartDate = formatDate(new Date(curr_date.getFullYear(), curr_date.getMonth(), 1));
+
+            SelectedEndDate = formatDate(new Date(curr_date.getFullYear(), curr_date.getMonth() + 1, 0));
+
+            //$('#bothDate')[0].innerHTML = formatDate(first_day) + " - " + formatDate(last_day);
+        }
+        else if (_datevalue == "Custom") {
+            SelectedStartDate = $('.applyBtn').val();//new Date(document.getElementsByName('daterangepicker_start')[0].value);
+            SelectedEndDate = new Date(document.getElementsByName('daterangepicker_end')[0].value);
+        }
+    }
+    function GetCustomeDate(customedate) {
+        var date = customedate.value;
+        var daterange = "";
+        daterange = date.split("-");
+        SelectedStartDate = daterange[0];
+        SelectedEndDate = daterange[1];
+
+        getSearchByAllvalueDynamic(SelectedStartDate, SelectedEndDate);
+    }
+
+//function initDashboardDaterange() {
+//    if (!jQuery().daterangepicker) {
+//        return;
+//    }
+//    var today = new Date();
+
+//    $('#dashboard-report-range').daterangepicker({
+//        "ranges": {
+//            'Today': [moment(today), moment(today)],
+//            'Yesterday': [moment(today).subtract('hours', 24), moment(today).subtract('hours', 24)],
+//            'This Week': [moment().subtract('days', 6), moment()],
+//            'This Month': [moment().subtract('days', 29), moment()],
+//            'Last Week': [moment().startOf('month'), moment().endOf('month')],
+//            'Last Month': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+//        },
+//        "locale": {
+//            "format": "MM/DD/YYYY",
+//            "separator": " - ",
+//            "applyLabel": "Apply",
+//            "cancelLabel": "Cancel",
+//            "fromLabel": "From",
+//            "toLabel": "To",
+//            "customRangeLabel": "Custom",
+//            "daysOfWeek": [
+//                "Su",
+//                "Mo",
+//                "Tu",
+//                "We",
+//                "Th",
+//                "Fr",
+//                "Sa"
+//            ],
+//            "monthNames": [
+//                "January",
+//                "February",
+//                "March",
+//                "April",
+//                "May",
+//                "June",
+//                "July",
+//                "August",
+//                "September",
+//                "October",
+//                "November",
+//                "December"
+//            ],
+//            "firstDay": 1
+//        },
+//        //"startDate": "11/08/2015",
+//        //"endDate": "11/14/2015",
+//        opens: (App.isRTL() ? 'right' : 'left'),
+//    }, function (start, end, label) {
+//        //if ($('#dashboard-report-range').attr('data-display-range') != '0') {
+//        //        $('#dashboard-report-range span').html(start.format('MMMM D, YYYY HH:mm') + ' - ' + end.format('MMMM D, YYYY HH:mm'));
+//        //}
+//    });
+//    //if ($('#dashboard-report-range').attr('data-display-range') != '0') {
+//    //    $('#dashboard-report-range span').html(moment().subtract('days', 29).format('MMMM D, YYYY HH:mm') + ' - ' + moment().format('MMMM D, YYYY HH:mm'));
+//    //}
+
+//    $('#dashboard-report-range').show();
+//}
+
+</script>

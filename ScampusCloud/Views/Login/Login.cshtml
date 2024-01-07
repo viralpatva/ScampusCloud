@@ -48,7 +48,7 @@
                 <div class="d-flex justify-content-between mt-n5">
                     <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
                 </div>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg", @required = "required" })
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg Password", @required = "required" })
                 @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
                 @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />

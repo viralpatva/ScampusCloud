@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\DashboadController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="DataBase\Database.cs" />
     <Compile Include="DataBase\DBExtension.cs" />
@@ -302,6 +303,8 @@
     <Content Include="Views\Shared\_LayoutHeadScriptsPartial.cshtml" />
     <Content Include="Views\Shared\_LoaderPartial.cshtml" />
     <Content Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
+    <Content Include="Views\Dashboad\Dashboad.cshtml" />
+    <Content Include="Views\Shared\_CommonDateFilterDynamic.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
