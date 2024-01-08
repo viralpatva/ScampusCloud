@@ -2,7 +2,6 @@
     
 });
 function Passwordshowhide(el) {
-    debugger;
     if ($(el).find('i').hasClass('fas fa-eye')) {
         var eye_slash_anchor = $(el).closest('div.form-group').find('.psw-slash-eyed');
         $(el).hide();
@@ -16,3 +15,28 @@ function Passwordshowhide(el) {
         $(el).closest('div.form-group').find('.Password').attr('type', 'password');
     }
 }
+$(function () {
+    if (localStorage.chkbx && localStorage.chkbx != '') {
+        $('#remember_me').attr('checked', 'checked');
+        $('#EmailId').val(localStorage.EmailId);
+        $('#Password').val(localStorage.Password);
+    }
+    else {
+        $('#remember_me').removeAttr('checked');
+        $('#EmailId').val('');
+        $('#Password').val('');
+    }
+
+    $('#remember_me').click(function () {
+        
+        if ($('#remember_me').is(':checked')) {
+            // save username and password
+            localStorage.EmailId = $('#EmailId').val();
+            localStorage.Password = $('#Password').val();
+            localStorage.chkbx = $('#remember_me').val();
+        } else {
+            localStorage.EmailId = '';
+            localStorage.Password = '';
+            localStorage.chkbx = '';
+        }
+    });});

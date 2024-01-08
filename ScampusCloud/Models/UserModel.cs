@@ -13,7 +13,7 @@ namespace ScampusCloud.Models
 
         public Guid StaffId { get; set; }
 
-        [Required(ErrorMessage = "Enter Access Group")]
+       
         public string Name { get; set; }
         public string EmailId { get; set; }
         public string PhoneNumber { get; set; }

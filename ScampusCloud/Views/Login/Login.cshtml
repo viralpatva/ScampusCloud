@@ -30,43 +30,46 @@
             <!--begin::Title-->
             <!--begin::Title-->
             <input type="hidden" asp-for="ReturnURL" />
+            if (@Model.Response_Message != null)
+            {
+                @Html.Partial("_NotificationAlert", new ScampusCloud.Models.ResponseMessage() { IsSuccess = Model.IsSuccess, Response_Message = Model.Response_Message })
+            }
+    <!--begin::Title-->
+    <!--begin::Form group-->
+    <div class="form-group">
+        <label class="font-size-h6 font-weight-bolder text-dark">Username</label>
+        @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg", @required = "required" })
+        @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
 
-            <!--begin::Title-->
-            <!--begin::Form group-->
-            <div class="form-group">
-                <label class="font-size-h6 font-weight-bolder text-dark">Username</label>
-                @Html.TextBoxFor(m => m.EmailId, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg", @required = "required" })
-                @Html.ValidationMessageFor(m => m.EmailId, "", new { @class = "text-danger" })
+        @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />
+        <span asp-validation-for="nvarUsername" class="text-danger"></span>*@
 
-                @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />
-                    <span asp-validation-for="nvarUsername" class="text-danger"></span>*@
+    </div>
+    <!--end::Form group-->
+    <!--begin::Form group-->
+    <div class="form-group position-relative">
+        <div class="d-flex justify-content-between mt-n5">
+            <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+        </div>
+        @Html.PasswordFor(m => m.Password, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg Password", @required = "required" })
+        @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
 
-            </div>
-            <!--end::Form group-->
-            <!--begin::Form group-->
-            <div class="form-group position-relative">
-                <div class="d-flex justify-content-between mt-n5">
-                    <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
-                </div>
-                @Html.PasswordFor(m => m.Password, new { @class = "form-control h-auto border-0 py-7 px-5 rounded-lg Password", @required = "required" })
-                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
-
-                @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />
-                    <span asp-validation-for="nvarPassword" class="text-danger"></span>*@
-                <a href="javascript:;" onclick="Passwordshowhide(this)" class="psw-eyed psw-field"><i class="icon-xl fas fa-eye"></i></a>
-                <a href="javascript:;" onclick="Passwordshowhide(this)" class="psw-slash-eyed psw-field" style="display:none;"><i class="icon-xl fas fa-eye-slash"></i></a>
-            </div>
-            <!--end::Form group-->
-            <div class="form-group">
-                <label class="checkbox mt-5">
-                    <input type="checkbox" asp-for="IsRemember" tabindex="3" />
-                    <div><span localize-content>Remember me</span></div>
-                    <span></span>
-                </label>
-                <button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-0 float-right">Sign In</button>
-            </div>
-            @*</form>*@
-        }
+        @*<input class="form-control h-auto border-0 py-7 px-5 rounded-lg" type="text" autocomplete="off" tabindex="1" required />
+        <span asp-validation-for="nvarPassword" class="text-danger"></span>*@
+        <a href="javascript:;" onclick="Passwordshowhide(this)" class="psw-eyed psw-field"><i class="icon-xl fas fa-eye"></i></a>
+        <a href="javascript:;" onclick="Passwordshowhide(this)" class="psw-slash-eyed psw-field" style="display:none;"><i class="icon-xl fas fa-eye-slash"></i></a>
+    </div>
+    <!--end::Form group-->
+    <div class="form-group">
+        <label class="checkbox mt-5">
+            <input type="checkbox" id="remember_me" asp-for="IsRemember" tabindex="3" />
+            <div><span localize-content>Remember me</span></div>
+            <span></span>
+        </label>
+        <button type="submit" id="kt_login_signin_submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-0 float-right">Sign In</button>
+    </div>
+    @*</form>*@
+}
         <!--end::Form-->
     </div>
     <!--end::Signin-->

@@ -226,9 +226,39 @@
     <Content Include="assets\plugins\global\plugins.bundle.js" />
     <Content Include="Connection\ConnectionString.txt" />
     <Content Include="Content\Site.css" />
+    <Content Include="css\site.css" />
+    <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\loading-squre.gif" />
+    <Content Include="js\site.js" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.min.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.min.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.css" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.min.css" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.min.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.js" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.min.js" />
+    <Content Include="lib\jquery-ajax-unobtrusive\jquery.unobtrusive-ajax.js" />
+    <Content Include="lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.js" />
+    <Content Include="lib\jquery-validation-unobtrusive\jquery.validate.unobtrusive.min.js" />
+    <Content Include="lib\jquery-validation-unobtrusive\LICENSE.txt" />
+    <Content Include="lib\jquery-validation\dist\additional-methods.js" />
+    <Content Include="lib\jquery-validation\dist\additional-methods.min.js" />
+    <Content Include="lib\jquery-validation\dist\jquery.validate.js" />
+    <Content Include="lib\jquery-validation\dist\jquery.validate.min.js" />
+    <Content Include="lib\jquery\dist\jquery.js" />
+    <Content Include="lib\jquery\dist\jquery.min.js" />
+    <Content Include="lib\jquery\LICENSE.txt" />
+    <Content Include="Logs\ErrorsLogs\Errorserrlog_638401877626364071.txt" />
+    <Content Include="Logs\Errors\errlog_637876342818393775.txt" />
     <Content Include="Web.config" />
+    <Content Include="webcamjs\flash\README.txt" />
+    <Content Include="webcamjs\webcam.js" />
+    <Content Include="webcamjs\webcam.min.js" />
+    <Content Include="webcamjs\webcam.swf" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
@@ -243,6 +273,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
@@ -294,6 +325,23 @@
     <Content Include="assets\plugins\global\fonts\summernote\summernote.ttf" />
     <Content Include="assets\plugins\global\fonts\summernote\summernote.woff" />
     <Content Include="assets\plugins\global\fonts\summernote\summernote.woff2" />
+    <Content Include="dymoLabelXML\Student_Badge.label" />
+    <Content Include="dymoLabelXML\Student_Badge_Final.label" />
+    <Content Include="dymoLabelXML\VisitorBadge2.label" />
+    <Content Include="dymoLabelXML\Visitor_Badge.label" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-grid.min.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap-reboot.min.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.css.map" />
+    <Content Include="lib\bootstrap\dist\css\bootstrap.min.css.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.js.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.bundle.min.js.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.js.map" />
+    <Content Include="lib\bootstrap\dist\js\bootstrap.min.js.map" />
+    <Content Include="lib\bootstrap\LICENSE" />
+    <Content Include="lib\jquery-validation\LICENSE.md" />
+    <Content Include="lib\jquery\dist\jquery.min.map" />
     <None Include="packages.config" />
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
@@ -305,15 +353,29 @@
     <Content Include="Views\Shared\_ValidationScriptsPartial.cshtml" />
     <Content Include="Views\Dashboad\Dashboad.cshtml" />
     <Content Include="Views\Shared\_CommonDateFilterDynamic.cshtml" />
+    <Content Include="Views\Shared\_NotificationAlert.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <None Include="Web.Release.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
+    <Content Include="webcamjs\bower.json" />
+    <Content Include="webcamjs\build.sh" />
+    <Content Include="webcamjs\DOCS.md" />
+    <Content Include="webcamjs\flash\com\adobe\images\BitString.as" />
+    <Content Include="webcamjs\flash\com\adobe\images\JPGEncoder.as" />
+    <Content Include="webcamjs\flash\com\adobe\images\PNGEncoder.as" />
+    <Content Include="webcamjs\flash\mx\utils\Base64Encoder.as" />
+    <Content Include="webcamjs\flash\Webcam.as" />
+    <Content Include="webcamjs\flash\Webcam.fla" />
+    <Content Include="webcamjs\LICENSE" />
+    <Content Include="webcamjs\package.json" />
+    <Content Include="webcamjs\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Logs\ErrorsLogs\Errors\" />
     <Folder Include="Repository\NewFolder1\" />
   </ItemGroup>
   <PropertyGroup>

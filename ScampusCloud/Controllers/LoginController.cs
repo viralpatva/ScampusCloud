@@ -1,8 +1,10 @@
 ﻿using ScampusCloud.Models;
 using ScampusCloud.Repository.Login;
+using ScampusCloud.Utility;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Web;
 using System.Web.Mvc;
 
@@ -24,25 +26,41 @@ namespace ScampusCloud.Controllers
 
         #region Method
         // GET: Login
-        public ActionResult Login()
+        public ActionResult Login(bool IsSuccess=false,string Response_Message=null)
         {
+            if (Response_Message != null)
+            {
+                _LoginModel.IsSuccess = IsSuccess;
+                _LoginModel.Response_Message = Response_Message;
+            }
             return View(_LoginModel);
         }
         [HttpPost]
         public ActionResult Login(LoginModel _LoginModel)
         {
-
-            var officemaster = _loginRepository.Get_User(_LoginModel);
-
-            if (officemaster == null)
+            try
             {
-                return RedirectToAction("Login");
+                    var officemaster = _loginRepository.Get_User(_LoginModel);
+                    if (officemaster != null)
+                    {
+                        Session["UserName"] = _LoginModel.EmailId;
+                        Session["CompanyId"] = officemaster.ParentUserId;
+                        return RedirectToAction("Dashboad", "Dashboad");
+
+                    }
+                    else
+                    {
+                        //ModelState.AddModelError(string.Empty, "The user name or password is incorrect");
+                        _LoginModel.IsSuccess = false;
+                        _LoginModel.Response_Message = "The user name or password is incorrect";
+                        return RedirectToAction("Login", "Login", new { IsSuccess = _LoginModel.IsSuccess, Response_Message= _LoginModel.Response_Message });
+                    }
             }
-            else
+            catch (Exception ex)
             {
-                return RedirectToAction("Dashboad","Dashboad");
+                ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.ToString() : string.Empty, this.GetType().Name + " : " + MethodBase.GetCurrentMethod().Name);
+                throw;
             }
-                
         }
 
         public ActionResult Logout()

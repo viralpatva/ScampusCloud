@@ -1,0 +1,50 @@
+﻿@model ScampusCloud.Models.ResponseMessage
+@{
+    ViewData["Title"] = "Error";
+}
+<style>
+    .alert.alert-danger {
+        background-color: #fbe1e3;
+        border-color: #fbe1e3;
+        color: #e73d4a;
+    }
+
+    .alert.alert-success {
+        background-color: #d4edda;
+        border-color: #c3e6cb;
+        color: #155724;
+    }
+
+    .close {
+        display: inline-block;
+        margin-top: 0;
+        margin-right: 0;
+        width: 9px;
+        height: 9px;
+        background-repeat: no-repeat !important;
+        text-indent: 0;
+        outline: 0;
+    }
+</style>
+@if (!string.IsNullOrEmpty(Model.Response_Message))
+{
+    if (!Model.IsSuccess)
+    {
+        <div id="ErrorAlert" class="alert alert-danger display-show">
+            <button type="button" class="close" data-close="alert">x</button>
+            <span>
+                <span class="field-validation-error" data-valmsg-for="Error" data-valmsg-replace="true">@Model.Response_Message</span>
+            </span>
+        </div>
+    }
+    else
+    {
+        <div id="SuccesssAlert" class="alert alert-success display-show">
+            <button type="button" class="close" data-close="alert">x</button>
+            <span>
+                <span>@Model.Response_Message</span>
+            </span>
+        </div>
+    }
+
+}
