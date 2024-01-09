@@ -1,0 +1,425 @@
+﻿@{
+
+    int pagesize = Convert.ToInt32(ViewData["paging_size"]);
+    int Totalcount = Convert.ToInt32(ViewData["totalrecords"]);
+
+    int noofpages = 1; //(Totalcount / pagesize);
+    noofpages = 0; // ((Totalcount % pagesize) > 0) ? (noofpages + 1) : (noofpages);
+    int currentPage = Convert.ToInt32(ViewData["currentPage"]);
+
+    // define the number of paging buttons.
+    int pagingArraySize = 0;
+    if (noofpages <= 5)
+    {
+        pagingArraySize = noofpages;
+    }
+    else
+    {
+        pagingArraySize = 5;
+    }
+
+    int[] pageNumbers = new int[pagingArraySize];
+
+    for (int i = 0; i < pagingArraySize; i++)
+    {
+        pageNumbers[i] = i + 1;
+    }
+    string sqltime = "";// CommonContext.CommonSqlDateTimeNow.ToShortTimeString();
+
+}
+<script type="text/javascript">
+    var currentURL = "";
+    var currentDIVID = "";
+    var currentPage = 1;
+    var noofpages = 1;
+    var _URL = "";
+    var DIVID = "";
+    var searchval = "";
+    var statusval = "";
+    var showing1stValue = '1';
+    var showingLastValue = '';
+    var totalrecords = "";
+    var pagesize = "";
+    var NoOfTotalRecords = 0;
+    var FromDate = '';
+    var ToDate = '';
+    var apikey = '';
+    var totalpages = 0;
+    var cardTypes = '';
+
+    function getpaging(divID, url, page, searchText, chr_status, _FromDate, _ToDate, _apikey) {
+         $(".loading").addClass('show');
+        totalrecords = parseInt(@ViewData["totalrecords"]);
+        var pagenumber = parseInt(page);
+        pagesize = parseInt($("#pagesize").val());
+        if (searchText === undefined || searchText === null || searchText === '') {
+            searchval = $("#kt_datatable_search_query").val();
+        }
+        else {
+            searchval = searchText;
+            // avoid some character as it will throw error at time of api call
+            searchval = searchval.replace('/', '');
+        }
+        if (chr_status === undefined || chr_status === null || chr_status === '') {
+            statusval = $("#drpstatus").val();
+        }
+        else {
+            statusval = chr_status;
+        }
+        currentURL = url;
+        currentDIVID = divID;
+        currentPage = page;
+        _URL = url;
+        DIVID = divID;
+        if (pagesize != null && pagesize != "") {
+            if ($("#cmbPageSize").val() != undefined) {
+                pagesize = $("#cmbPageSize").val();
+                pagesize = pagesize.replace("Pages", "");
+                noofpages = totalrecords / pagesize; //(parseInt($("#noofpages").val());
+                noofpages = ((totalrecords % pagesize) > 0) ? Math.floor(noofpages + 1) : (noofpages);
+            }
+        }
+        if (searchText == undefined)
+            searchText = '';
+       $("#hdnSelectedPage").val(page);
+       if (pagesize == "All") {
+            pagesize = totalrecords;
+        }
+        var actionUrl = _URL;
+
+        actionUrl = actionUrl + '?' + 'page=' + pagenumber + '&pagesize=' + pagesize;
+
+        //append search text value while retrieving record
+        if (searchval != undefined && searchval != null && searchval != '') {
+            actionUrl = actionUrl + '&searchtxt=' + encodeURIComponent(searchval);
+        }
+        //append status dropdown value while retrieving record
+        if (statusval != undefined && statusval != null && statusval != '') {
+            actionUrl = actionUrl + '&status=' + statusval;
+        }
+        //append FROM date while retrieving record
+        if (_FromDate != undefined && _FromDate != null && _FromDate != '') {
+            FromDate = _FromDate;
+        }
+        if (FromDate != '') {
+            actionUrl = actionUrl + '&FromDate=' + FromDate;
+        }
+        //append TO date while retrieving record
+        if (_ToDate != undefined && _ToDate != null && _ToDate != '') {
+            ToDate = _ToDate;
+        }
+        if (ToDate != '') {
+            actionUrl = actionUrl + '&ToDate=' + ToDate;
+        }
+
+        $.ajax({
+            type: "GET",
+            url: actionUrl,
+            cache: false,
+            contentType: "application/html",
+            error: function (request, error) {
+                $(".loading").removeClass('show');
+                alert(error);
+            },
+            success: function (data) {
+                $(".loading").removeClass('show');
+                $('#' + divID).html('');
+                $('#' + divID).html(data);
+                if ($('#' + divID).html(data)[0].innerText == "No records found") {
+                    if ($('.dvDisplay')[0])
+                        $('.dvDisplay').css('display', 'none');
+                }
+                else {
+                    if ($('.dvDisplay')[0])
+                        $('.dvDisplay').css('display', 'block');
+                }
+                //$(".loading").removeClass('show');
+                KTDatatableHtmlTableDemo.init();
+                var cnt = 0;
+                ////this will be applicable for client list and store list
+                if ($(".totalcount").length > 0) {
+                    cnt = $('#' + divID).find('.list-default').length;
+                }
+                else {
+                    cnt = $('#' + divID).find('tbody > tr').length; //parseInt($('#tblResponsive td').closest("tr").length);
+                }
+                if (parseInt(cnt) == 0) {
+                    $("#hdnShowing1st").val(0);
+                }
+                else {
+                    $("#hdnShowing1st").val(1);
+                }
+                if (parseInt(cnt) < (parseInt(pagesize))) {
+                    $("#hdnShowingLast").val(cnt);
+                }
+
+                if (((pagenumber == 1) && (parseInt(cnt) == (parseInt(pagesize)))) || $("#hdnPageClick").val() == 'gotoFirstPage') {
+                    showing1stValue = 1;
+                    showingLastValue = cnt;
+                    $("#hdnShowing1st").val(showing1stValue);
+                    $("#hdnShowingLast").val(showingLastValue);
+                }
+                else if ($("#hdnPageClick").val() == 'NextPage' && parseInt(cnt) != 0) {
+                    showing1stValue = parseInt(parseInt(showing1stValue) + parseInt(pagesize));
+                    showingLastValue = parseInt(parseInt(showing1stValue-1) + parseInt(cnt));
+                    $("#hdnShowing1st").val(showing1stValue);
+                    $("#hdnShowingLast").val(showingLastValue);
+                }
+                else if ($("#hdnPageClick").val() == 'PreviousPage' && parseInt(cnt) != 0) {
+                    showing1stValue = parseInt(parseInt(showing1stValue) - parseInt(pagesize));
+                    showingLastValue = parseInt(parseInt(showing1stValue - 1) + parseInt(cnt));
+                    $("#hdnShowing1st").val(showing1stValue);
+                    $("#hdnShowingLast").val(showingLastValue);
+                }
+                else if ($("#hdnPageClick").val() == 'GotoPage' && parseInt(cnt) != 0) {
+                    showing1stValue = parseInt(parseInt(currentPage - 1) * parseInt(pagesize)) + 1;
+                    showingLastValue = parseInt(parseInt(showing1stValue) + parseInt(cnt)) - 1;
+                    $("#hdnShowing1st").val(showing1stValue);
+                    $("#hdnShowingLast").val(showingLastValue);
+                }
+                else if ($("#hdnPageClick").val() == 'gotoLastPage' && parseInt(cnt) != 0) {
+                    totalpages = page;//noofpages > 0 ? noofpages : totalpages
+                    showing1stValue = parseInt(parseInt(totalpages - 1) * parseInt(pagesize)) + 1;
+                    showingLastValue = parseInt(parseInt(showing1stValue - 1) + parseInt(cnt));
+                    $("#hdnShowing1st").val(showing1stValue);
+                    $("#hdnShowingLast").val(showingLastValue);
+                }
+
+                $.ajax({
+                    type: "GET",
+                    url: _URL + 'Count',
+                    data: "",
+                    cache: false,
+                    contentType: "application/html",
+                    error: function (request, error) {
+                        alert(error);
+                    },
+                    success: function (data) {
+
+                        var obj = JSON.parse(data);
+                        noofpages = obj.noofpages;
+                        NoOfTotalRecords = obj.NoOfTotalRecords;
+                        setPaging();
+
+                        ////this will be applicable for client list and store list
+                        if ($(".totalcount").length > 0) {
+                            $(".totalcount").html(NoOfTotalRecords);
+                            if (NoOfTotalRecords === 0) {
+                                $(".paging-section").hide();
+                            }
+                            else {
+                                $(".paging-section").show();
+                            }
+                        }
+                    }
+                });
+                //KTDatatableHtmlTableDemo.init();
+
+            }
+        });
+    }
+
+     function setPaging()
+     {
+        $('#pagingFooter').html('');
+        var strPagingHTML = "";
+        var pagingArraySize = 0;
+        if (parseInt(noofpages) <= 5) { pagingArraySize = noofpages; } else { pagingArraySize = 5; }
+        var pageNumbers = new Array();
+        var startPage = 1;
+        var endPage = 5;
+        if (currentPage > 2) {
+            if (noofpages > 5) {
+
+                if (parseInt(currentPage) - 2 > 0 && parseInt(currentPage) + 2 < noofpages) {
+                    startPage = parseInt(currentPage) - 2;
+                    endPage = parseInt(currentPage) + 2;
+                }
+                else {
+                    startPage = noofpages - 4;
+                    endPage = noofpages;
+                }
+            }
+        }
+
+        for (var i = 0; i < pagingArraySize; i++) {
+            pageNumbers.push(parseInt(startPage));
+            startPage += 1;
+        }
+        strPagingHTML += "<ul class='datatable-pager-nav mb-5 mb-sm-0'>";
+        if (parseInt(noofpages) == 1) {
+            strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-first datatable-pager-link-disabled' disabled='disabled' title='First'><i class='flaticon2-fast-back'></i></a></li>";
+            strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-prev datatable-pager-link-disabled' disabled='disabled' title='Previous'><i class='flaticon2-back'></i></a></li>";
+            strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-number datatable-pager-link-active' title=" + noofpages + ">" + noofpages + "</a></li>";
+            strPagingHTML += "<li style=''></li>"
+            strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-next datatable-pager-link-disabled' disabled='disabled' title='Next'><i class='flaticon2-next'></i></a></li>";
+            strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-last datatable-pager-link-disabled' disabled='disabled' title='Last'><i class='flaticon2-fast-next'></i></a></li>";
+        }
+        else
+        {
+            if (parseInt(currentPage) == 1) {
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-first datatable-pager-link-disabled' title='First' onclick='gotoFirstPage()'><i class='flaticon2-fast-back'></i></a></li>";
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-prev datatable-pager-link-disabled' title='Previous'><i class='flaticon2-back'></i></a></li>";
+            }
+            else {
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-first' title='First' onclick='gotoFirstPage()'><i class='flaticon2-fast-back'></i></a></li>";
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-prev' title='Previous' onclick='gotoPreviousPage()'><i class='flaticon2-back'></i></a></li>";
+            }
+            for (var j = 0; j < pageNumbers.length; j++) {
+                if (parseInt($("#hdnSelectedPage").val()) == parseInt(pageNumbers[j])) {
+                    strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-number datatable-pager-link-active' title=" + pageNumbers[j] + " onclick='gotoPage(" + pageNumbers[j] + ")'>" + pageNumbers[j] + "</a></li>";
+                }
+                else {
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-number' title=" + pageNumbers[j] + " onclick='gotoPage(" + pageNumbers[j] + ")'>" + pageNumbers[j] + "</a></li>";
+                }
+                strPagingHTML += "<li style=''></li>"
+            }
+            if (parseInt(currentPage) == parseInt(noofpages)) {
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-next datatable-pager-link-disabled' title='Next'><i class='flaticon2-next'></i></a></li>";
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-last datatable-pager-link-disabled' title='Last' onclick='gotoLastPage()' ><i class='flaticon2-fast-next'></i></a></li>";
+            }
+            else {
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-next' title='Next' onclick='gotoNextPage()'><i class='flaticon2-next'></i></a></li>";
+                strPagingHTML += "<li><a class='datatable-pager-link datatable-pager-link-last' title='Last' onclick='gotoLastPage()' ><i class='flaticon2-fast-next'></i></a></li>";
+            }
+        }
+
+        strPagingHTML += "</ul>";
+        strPagingHTML += "<div class='pager-info'>";
+        strPagingHTML += "<div class='dropdown bootstrap-select datatable-pager-size' style='left: 50px;'>";
+
+        strPagingHTML += "<select class='CustomDropdown datatable-pager-size' data-placeholder='5' tabindex='-1' name='cmbPageSize' id='cmbPageSize' onchange='getSearchByAll(this)'>";
+
+        if (parseInt($("#pagesize").val()) == 5) {
+            strPagingHTML += "<option value='5' selected='selected'>5</option>";
+            strPagingHTML += "<option value='10'>10</option>";
+            strPagingHTML += "<option value='20'>20</option>";
+            strPagingHTML += "<option value='50'>50</option>";
+            strPagingHTML += "<option value='100'>100</option>";
+        }
+        else if (parseInt($("#pagesize").val()) == 20) {
+            strPagingHTML += "<option value='5'>5</option>";
+            strPagingHTML += "<option value='10'>10</option>";
+            strPagingHTML += "<option value='20' selected='selected'>20</option>";
+            strPagingHTML += "<option value='50'>50</option>";
+            strPagingHTML += "<option value='100'>100</option>";
+        }
+        else if (parseInt($("#pagesize").val()) == 50) {
+            strPagingHTML += "<option value='5'>5</option>";
+            strPagingHTML += "<option value='10'>10</option>";
+            strPagingHTML += "<option value='20'>20</option>";
+            strPagingHTML += "<option value='50' selected='selected'>50</option>";
+            strPagingHTML += "<option value='100'>100</option>";
+        }
+        else if (parseInt($("#pagesize").val()) == 100) {
+            strPagingHTML += "<option value='5'>5</option>";
+            strPagingHTML += "<option value='10'>10</option>";
+            strPagingHTML += "<option value='20'>20</option>";
+            strPagingHTML += "<option value='50'>50</option>";
+            strPagingHTML += "<option value='100' selected='selected'>100</option>";
+        }
+        else {
+            strPagingHTML += "<option value='5'>5</option>";
+            strPagingHTML += "<option value='10' selected='selected'>10</option>";
+            strPagingHTML += "<option value='20'>20</option>";
+            strPagingHTML += "<option value='50'>50</option>";
+            strPagingHTML += "<option value='100'>100</option>";
+        }
+        strPagingHTML += "</select>";
+        strPagingHTML += "</div>";
+        strPagingHTML += "<span class='datatable-pager-detail spanLeft'> Showing " + $("#hdnShowing1st").val() + " - " + $("#hdnShowingLast").val() + " of " + parseInt(NoOfTotalRecords) + "</span >";
+        strPagingHTML += "</div>";
+        $('#pagingFooter').html(strPagingHTML);
+        $('.custom-override').show();
+     }
+
+     // go to desired page
+    function gotoPage(pageNumber) {
+        $("#hdnPageClick").val("GotoPage");
+        $("#hdnShowing1st").val('');
+        $("#hdnShowingLast").val('');
+        $("#hdnSelectedPage").val(pageNumber);
+        getpaging(currentDIVID, currentURL, pageNumber, searchval, statusval, FromDate, ToDate);
+    }
+
+    function gotoNextPage() {
+        $("#hdnPageClick").val("NextPage");
+        var nextPage = parseInt(currentPage);
+        nextPage += 1;
+        $("#hdnSelectedPage").val(nextPage);
+        getpaging(currentDIVID, currentURL, nextPage, searchval, statusval, FromDate, ToDate);
+    }
+
+    function gotoPreviousPage() {
+        $("#hdnPageClick").val("PreviousPage");
+        var prevPage = parseInt(currentPage);
+        prevPage -= 1;
+        $("#hdnSelectedPage").val(prevPage);
+        getpaging(currentDIVID, currentURL, prevPage, searchval, statusval, FromDate, ToDate);
+    }
+
+    function gotoLastPage() {
+        var nextPage = noofpages;
+        totalpages = noofpages;
+        $("#hdnPageClick").val("gotoLastPage");
+        $("#hdnSelectedPage").val(nextPage);
+        getpaging(currentDIVID, currentURL, nextPage, searchval, statusval, FromDate, ToDate);
+    }
+
+    function gotoFirstPage() {
+        $("#hdnPageClick").val("gotoFirstPage");
+        prevPage = 1;
+        $("#hdnSelectedPage").val(prevPage);
+        getpaging(currentDIVID, currentURL, prevPage, searchval, statusval, FromDate, ToDate);
+    }
+
+    function mobilepageing(divID, url) {
+        var currentPages = 2;
+        var resl = getResolutionId();
+        if (resl < 5 && resl != 4) {
+            $(window).scroll(function () {
+                var noofpages = parseInt($("#noofpages").val());
+                if (noofpages >= currentPages) {
+                    if ($(window).scrollTop() + $(window).height() == $(document).height()) {
+                        $.ajax({
+                            type: "GET",
+                            url: url,
+                            data: "page=" + currentPages,
+                            start: SetLoader(),
+                            success: function (results) {
+                                $('#' + divID).append(results);
+                                UnsetLoader();
+                                currentPages++;
+                            }
+                        })
+                    }
+                }
+            });
+        }
+    }
+
+    function getSearchByAll(pagesize) {
+        $("#pagesize").val(pagesize.value);
+        $("#hdnShowing1st").val(1);
+        $("#hdnPageClick").val('');
+        $("#hdnSelectedPage").val(1);
+        page = 1;
+        getpaging(currentDIVID, currentURL, page, searchval, statusval, FromDate,ToDate);
+    }
+
+    function RemoveQueryStringFromURI(_URL) {
+        if (_URL.indexOf("?") > 0) {
+            _URL = _URL.substring(0, _URL.indexOf("?"));
+        }
+        return _URL;
+    }
+</script>
+
+<input type="hidden" id="totalrecords" value="@Totalcount" />
+<input type="hidden" id="pagesize" value="@pagesize" />
+<input type="hidden" id="pagenumber" value="1" />
+<input type="hidden" id="noofpages" value="@noofpages" />
+<input type="hidden" id="hdnShowing1st" value="1" />
+<input type="hidden" id="hdnShowingLast" value="5" />
+<input type="hidden" id="hdnPageClick" />
+<input type="hidden" id="hdnSelectedPage" value="1" />

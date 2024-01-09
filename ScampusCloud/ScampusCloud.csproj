@@ -262,6 +262,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboadController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="DataBase\Database.cs" />
@@ -272,6 +273,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\UserModel.cs" />
@@ -354,6 +356,10 @@
     <Content Include="Views\Dashboad\Dashboad.cshtml" />
     <Content Include="Views\Shared\_CommonDateFilterDynamic.cshtml" />
     <Content Include="Views\Shared\_NotificationAlert.cshtml" />
+    <Content Include="Views\Customer\Customer.cshtml" />
+    <Content Include="Views\Customer\AddEditCustomer.cshtml" />
+    <Content Include="Views\Shared\_CustomPaging.cshtml" />
+    <Content Include="Views\Shared\_DeleteConfirmationPartial.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

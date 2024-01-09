@@ -1,0 +1,58 @@
+﻿@*@using Microsoft.AspNetCore.Localization;
+@{
+    
+}*@
+<script type="text/javascript">
+    function DeleteConfirmation(ID, strMessage, controllerName, actionName) {
+        var CommonTitle = "Are you sure want to delete this ";
+        var CommonTitle1 = "";
+        var CommonText = ""; //You won't be able to revert this!
+        var CommonCancelBtnText = "Cancel";
+        var CommonConfirmBtnText = "Yes, delete it!";
+        var toastrSuccessPostfixMessage = "Deleted Successfully!";
+
+        if(controllerName=='StaffCard'){
+            CommonTitle = "Are you sure want to InActivate this card";
+            strMessage="";
+            CommonTitle1="";
+            CommonText="";
+             CommonConfirmBtnText = "Yes";
+            toastrSuccessPostfixMessage="InActivate Successfully";
+        }
+        
+         Swal.fire({
+             title: CommonTitle + strMessage + CommonTitle1,
+             text: CommonText,
+             icon: "error",
+             showCancelButton: true,
+             cancelButtonText: CommonCancelBtnText,
+             confirmButtonText: CommonConfirmBtnText
+         }).then(
+             function (result) {
+                 if (result.value) {
+                     var _dynamicURL = '/' + controllerName + '/' + actionName + '?Id=' + ID;
+                     $.ajax({
+                         type: "POST",
+                         url: _dynamicURL,
+                         contentType: "application/json; charset=utf-8",
+                         success: function (data) {
+                             Swal.fire({
+                                 position: "top-right",
+                                 icon: "success",
+                                 title: "" + strMessage + toastrSuccessPostfixMessage + "",
+                                 showConfirmButton: false,
+                                 timer: 1500
+                             });
+                                 if (typeof LoadGridData == 'function') {
+                                     LoadGridData();
+                                 }
+                                 else {
+                                     window.location.reload();
+                                 }
+                         }
+                     });
+                 }
+             });
+    };
+
+</script>
