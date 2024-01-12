@@ -46,7 +46,8 @@ namespace ScampusCloud.Controllers
                         Session["UserName"] = _LoginModel.EmailId;
                         Session["CompanyId"] = officemaster.ParentUserId;
                         Session["Name"] = officemaster.Name;
-                        return RedirectToAction("Dashboad", "Dashboad");
+                        Session["UserId"] = officemaster.UserId;
+                    return RedirectToAction("Dashboad", "Dashboad");
 
                     }
                     else

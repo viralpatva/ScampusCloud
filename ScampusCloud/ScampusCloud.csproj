@@ -285,6 +285,7 @@
     <Compile Include="Utility\common.cs" />
     <Compile Include="Utility\EncryptionDecryption.cs" />
     <Compile Include="Utility\ErrorLogger.cs" />
+    <Compile Include="Utility\ImageCompressor.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

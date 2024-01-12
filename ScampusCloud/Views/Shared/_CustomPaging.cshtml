@@ -3,8 +3,8 @@
     int pagesize = Convert.ToInt32(ViewData["paging_size"]);
     int Totalcount = Convert.ToInt32(ViewData["totalrecords"]);
 
-    int noofpages = 1; //(Totalcount / pagesize);
-    noofpages = 0; // ((Totalcount % pagesize) > 0) ? (noofpages + 1) : (noofpages);
+    int noofpages = (Totalcount / pagesize);
+    noofpages = ((Totalcount % pagesize) > 0) ? (noofpages + 1) : (noofpages);
     int currentPage = Convert.ToInt32(ViewData["currentPage"]);
 
     // define the number of paging buttons.
@@ -48,7 +48,8 @@
     var cardTypes = '';
 
     function getpaging(divID, url, page, searchText, chr_status, _FromDate, _ToDate, _apikey) {
-         $(".loading").addClass('show');
+        $(".loading").addClass('show');
+        debugger;
         totalrecords = parseInt(@ViewData["totalrecords"]);
         var pagenumber = parseInt(page);
         pagesize = parseInt($("#pagesize").val());
@@ -123,6 +124,7 @@
             },
             success: function (data) {
                 $(".loading").removeClass('show');
+                debugger;
                 $('#' + divID).html('');
                 $('#' + divID).html(data);
                 if ($('#' + divID).html(data)[0].innerText == "No records found") {

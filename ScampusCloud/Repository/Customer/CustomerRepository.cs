@@ -13,7 +13,7 @@ namespace ScampusCloud.Repository.Customer
 	public class CustomerRepository
 	{
 		private GeneralMethods objgm = new GeneralMethods();
-		public bool AddEdit_Customer(CustomerModel _CustomerModel)
+		public CustomerModel AddEdit_Customer(CustomerModel _CustomerModel)
 		{
 			try
 			{
@@ -26,16 +26,19 @@ namespace ScampusCloud.Repository.Customer
 
 				objQueryBuilder.AddFieldValue("@Id", _CustomerModel.Id, DataTypes.Numeric, false);
 				objQueryBuilder.AddFieldValue("@CompanyId", _CustomerModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Name", _CustomerModel.CustomerName +" "+ _CustomerModel.LastName, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Address", _CustomerModel.CompanyName, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Website", _CustomerModel.CompanySite, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@EmailId", _CustomerModel.EmailAddress, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@PhoneNumber", _CustomerModel.ContactPhone, DataTypes.Text, false);
-				//objQueryBuilder.AddFieldValue("@CreatedBy", _CustomerModel.CreatedBy, DataTypes.Text, false);
-				//objQueryBuilder.AddFieldValue("@ModifiedBy", _CustomerModel.ModifiedBy, DataTypes.Text, false); 
-				objQueryBuilder.AddFieldValue("@ActionType", _CustomerModel.ActionType, DataTypes.Text, false);
-				
-				return objgm.ExecuteObjectUsingSp<bool>(objQueryBuilder, true);
+				objQueryBuilder.AddFieldValue("@Name", _CustomerModel.Name, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@Address", _CustomerModel.Address, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@Website", _CustomerModel.Website, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@EmailId", _CustomerModel.EmailId, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@PhoneNumber", _CustomerModel.PhoneNumber, DataTypes.Text, false);
+                objQueryBuilder.AddFieldValue("@CreatedBy", _CustomerModel.CreatedBy, DataTypes.Text, false);
+                objQueryBuilder.AddFieldValue("@ModifiedBy", _CustomerModel.ModifiedBy, DataTypes.Text, false);
+                objQueryBuilder.AddFieldValue("@ActionType", _CustomerModel.ActionType, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@AdminUserEmailId", _CustomerModel.AdminUserEmailId, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@AdminUserPhoneNumber", _CustomerModel.AdminUserPhoneNumber, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@AdminUserPassword", EncryptionDecryption.GetEncrypt(_CustomerModel.AdminUserPassword), DataTypes.Text, false);
+
+				return objgm.ExecuteObjectUsingSp<CustomerModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
 			{
@@ -44,17 +47,20 @@ namespace ScampusCloud.Repository.Customer
 			}
 		}
 
-		public CustomerModel GetCustomerList()
+		public List<CustomerModel> GetCustomerList(string searchtxt = "", int page = 1, int pagesize = 10)
 		{
 			try
 			{
 				QueryBuilder objQueryBuilder = new QueryBuilder
 				{
-					StoredProcedureName = @"SP_Customer_List",
+					TableName = "Tbl_Mstr_Customer",
+					StoredProcedureName = @"SP_GetCustomerData",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				return objgm.ExecuteObjectUsingSp<CustomerModel>(objQueryBuilder, true);
+				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@page", page, DataTypes.Numeric, false);
+				objQueryBuilder.AddFieldValue("@pagesize", pagesize, DataTypes.Numeric, false);
+				return objgm.GetListUsingSp<CustomerModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
 			{
@@ -62,5 +68,27 @@ namespace ScampusCloud.Repository.Customer
 				throw;
 			}
 		}
+
+		public string GetAllCount(string searchtxt = "")
+		{
+			try
+			{
+				QueryBuilder objQueryBuilder = new QueryBuilder
+				{
+					TableName = "Tbl_Mstr_Customer",
+					StoredProcedureName = @"SP_GetCustomerData_Count",
+					SetQueryType = QueryBuilder.QueryType.SELECT,
+				};
+				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				return objgm.ExcecuteScalarUsingSp(objQueryBuilder);
+			}
+			catch (Exception ex)
+			{
+				ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.ToString() : string.Empty, this.GetType().Name + " : " + MethodBase.GetCurrentMethod().Name);
+				throw;
+			}
+
+		}
+
 	}
 }
