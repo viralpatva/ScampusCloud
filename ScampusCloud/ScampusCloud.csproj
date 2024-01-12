@@ -274,12 +274,13 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\Customer.cs" />
+    <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Customer\CustomerRepository.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
     <Compile Include="Utility\common.cs" />
     <Compile Include="Utility\EncryptionDecryption.cs" />
@@ -386,7 +387,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Logs\ErrorsLogs\Errors\" />
-    <Folder Include="Repository\NewFolder1\" />
+    <Folder Include="Repository\NewFolder2\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

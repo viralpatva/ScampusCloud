@@ -1,4 +1,4 @@
-﻿@model ScampusCloud.Models.Customer
+﻿@model ScampusCloud.Models.CustomerModel
 @{
     ViewData["Title"] = "Add/Edit Customer";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -166,7 +166,9 @@
                                                         <div class="form-group row">
                                                             <label class="col-form-label col-3 text-lg-right text-left">Customer Name</label>
                                                             <div class="col-9">
-                                                                <input class="form-control form-control-lg form-control-solid" type="text" value="Anna" />
+                                                                @*<input class="form-control form-control-lg form-control-solid" type="text" value="Anna" />*@
+                                                                @Html.TextBoxFor(m => m.CustomerName, new { @class = "form-control form-control-lg form-control-solid", @required = "required" })
+                                                                @Html.ValidationMessageFor(m => m.CustomerName, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
                                                         <!--end::Group-->
@@ -174,7 +176,9 @@
                                                         <div class="form-group row">
                                                             <label class="col-form-label col-3 text-lg-right text-left">Last Name</label>
                                                             <div class="col-9">
-                                                                <input class="form-control form-control-lg form-control-solid" type="text" value="Krox" />
+                                                                @*<input class="form-control form-control-lg form-control-solid" type="text" value="Krox" />*@
+                                                                @Html.TextBoxFor(m => m.LastName, new { @class = "form-control form-control-lg form-control-solid", @required = "required" })
+                                                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
                                                         <!--end::Group-->
@@ -182,7 +186,9 @@
                                                         <div class="form-group row">
                                                             <label class="col-form-label col-3 text-lg-right text-left">Company Name</label>
                                                             <div class="col-9">
-                                                                <input class="form-control form-control-lg form-control-solid" type="text" value="Loop Inc." />
+                                                                @Html.TextBoxFor(m => m.CompanyName, new { @class = "form-control-lg form-control-solid", @required = "required" })
+                                                                @Html.ValidationMessageFor(m => m.CompanyName, "", new { @class = "text-danger" })
+                                                                @*<input class="form-control form-control-lg form-control-solid" type="text" value="Loop Inc." />*@
                                                                 <span class="form-text text-muted">If you want your invoices addressed to a company. Leave blank to use your full name.</span>
                                                             </div>
                                                         </div>
@@ -197,7 +203,9 @@
                                                                             <i class="la la-phone"></i>
                                                                         </span>
                                                                     </div>
-                                                                    <input type="text" class="form-control form-control-lg form-control-solid" value="+45678967456" placeholder="Phone" />
+                                                                    @Html.TextBoxFor(m => m.ContactPhone, new { @class = "form-control form-control-lg form-control-solid", @required = "required" })
+                                                                    @Html.ValidationMessageFor(m => m.ContactPhone, "", new { @class = "text-danger" })
+                                                                    @*<input type="text" class="form-control form-control-lg form-control-solid" value="+45678967456" placeholder="Phone" />*@
                                                                 </div>
                                                                 <span class="form-text text-muted">We'll never share your email with anyone else.</span>
                                                             </div>
@@ -213,7 +221,9 @@
                                                                             <i class="la la-at"></i>
                                                                         </span>
                                                                     </div>
-                                                                    <input type="text" class="form-control form-control-lg form-control-solid" value="anna.krox@loop.com" placeholder="Email" />
+                                                                    @Html.TextBoxFor(m => m.EmailAddress, new { @class = "form-control form-control-lg form-control-solid", @required = "required" })
+                                                                    @Html.ValidationMessageFor(m => m.EmailAddress, "", new { @class = "text-danger" })
+                                                                    @*<input type="text" class="form-control form-control-lg form-control-solid" value="anna.krox@loop.com" placeholder="Email" />*@
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -223,7 +233,9 @@
                                                             <label class="col-form-label col-3 text-lg-right text-left">Company Site</label>
                                                             <div class="col-9">
                                                                 <div class="input-group input-group-lg input-group-solid">
-                                                                    <input type="text" class="form-control form-control-lg form-control-solid" placeholder="Username" value="loop" />
+                                                                    @*<input type="text" class="form-control form-control-lg form-control-solid" placeholder="Username" value="loop" />*@
+                                                                    @Html.TextBoxFor(m => m.CompanySite, new { @class = "form-control form-control-lg form-control-solid", @required = "required" })
+                                                                    @Html.ValidationMessageFor(m => m.CompanySite, "", new { @class = "text-danger" })
                                                                     <div class="input-group-append">
                                                                         <span class="input-group-text">.com</span>
                                                                     </div>
