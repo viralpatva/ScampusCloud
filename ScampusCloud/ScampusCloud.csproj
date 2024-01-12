@@ -265,6 +265,7 @@
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboadController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="DataBase\Database.cs" />
     <Compile Include="DataBase\DBExtension.cs" />
     <Compile Include="DataBase\FieldValue.cs" />
@@ -275,6 +276,7 @@
     </Compile>
     <Compile Include="Models\Customer.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -360,6 +362,8 @@
     <Content Include="Views\Customer\AddEditCustomer.cshtml" />
     <Content Include="Views\Shared\_CustomPaging.cshtml" />
     <Content Include="Views\Shared\_DeleteConfirmationPartial.cshtml" />
+    <Content Include="Views\Staff\Staff.cshtml" />
+    <Content Include="Views\Staff\AddEditStaff.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
