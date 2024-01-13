@@ -753,6 +753,7 @@ namespace ScampusCloud.DataBase
                             using (var dt = new DataTable())
                             {
                                 OpenConnection(conn);
+                                dt.TableName = "Customer";
                                 da.Fill(dt);
                                 return dt;
                             }

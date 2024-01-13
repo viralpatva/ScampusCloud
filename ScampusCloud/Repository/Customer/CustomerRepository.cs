@@ -4,6 +4,7 @@ using ScampusCloud.Utility;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
+using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Web;
@@ -37,6 +38,7 @@ namespace ScampusCloud.Repository.Customer
 				objQueryBuilder.AddFieldValue("@AdminUserEmailId", _CustomerModel.AdminUserEmailId, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@AdminUserPhoneNumber", _CustomerModel.AdminUserPhoneNumber, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@AdminUserPassword", EncryptionDecryption.GetEncrypt(_CustomerModel.AdminUserPassword), DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@Isactive", _CustomerModel.Isactive, DataTypes.Boolean, false);
 
 				return objgm.ExecuteObjectUsingSp<CustomerModel>(objQueryBuilder);
 			}
@@ -90,5 +92,24 @@ namespace ScampusCloud.Repository.Customer
 
 		}
 
+		public DataTable GetCustomerData_Export(string searchtxt = "")
+		{
+			try
+			{
+				QueryBuilder objQueryBuilder = new QueryBuilder
+				{
+					TableName = "Customer",
+					StoredProcedureName = @"SP_DownloadCustomerData_Export",
+					SetQueryType = QueryBuilder.QueryType.SELECT
+				};
+				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				return objgm.ExecuteDataTableUsingSp(objQueryBuilder, true);
+			}
+			catch (Exception ex)
+			{
+				ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.ToString() : string.Empty, this.GetType().Name + " : " + MethodBase.GetCurrentMethod().Name);
+				throw;
+			}
+		}
 	}
 }

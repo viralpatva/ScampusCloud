@@ -1,9 +1,12 @@
-﻿using ScampusCloud.Models;
+﻿using ClosedXML.Excel;
+using ScampusCloud.Models;
 using ScampusCloud.Repository.Customer;
 using ScampusCloud.Repository.Login;
 using ScampusCloud.Utility;
 using System;
 using System.Collections.Generic;
+using System.Data;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
@@ -57,6 +60,7 @@ namespace ScampusCloud.Controllers
                     if (_CustomerModel != null)
                     {
                         _CustomerModel.IsEdit = true;
+                        _CustomerModel.AdminUserPassword = !string.IsNullOrEmpty(_CustomerModel.AdminUserPassword) ? EncryptionDecryption.GetDecrypt(_CustomerModel.AdminUserPassword) : string.Empty;
                         //if (model.Code == null)
                         //    model.Code = "";
                         //HttpContext.Session.SetString("Original_Id", model.Code);
@@ -106,7 +110,7 @@ namespace ScampusCloud.Controllers
             {
                 return RedirectToAction("Customer", "Customer");
             }
-            else if (_CustomerModel.IsEdit==true)
+            else if (_CustomerModel.IsEdit == true)
             {
                 return RedirectToAction("AddEditCustomer", new { ID = _CustomerModel.Id });
             }
@@ -222,7 +226,41 @@ namespace ScampusCloud.Controllers
             }
         }
 
+        //[HttpPost]
+        //public string PreviewSelectedImage(IFormFile file)
+        //{
+        //    string base64OfThumbImg = string.Empty, originalImageBase64 = string.Empty;
+        //    if (file != null)
+        //    {
+        //        //originalImageBase64 = ImageCompressor.OriginalBase64String(file).Result;
+        //        base64OfThumbImg = ImageCompressor.GetBase64StringAsync(file, 300, 300).Result;
+        //    }
+        //    return base64OfThumbImg;
+        //}
 
+        [HttpPost]
+        public FileResult Export(string searchtxt = "")
+        {
+            DataTable dt = new DataTable("Customer");
+            try
+            {
+                dt = _customerRepository.GetCustomerData_Export(searchtxt);
+                using (XLWorkbook wb = new XLWorkbook())
+                {
+                    wb.Worksheets.Add(dt);
+                    using (MemoryStream stream = new MemoryStream())
+                    {
+                        wb.SaveAs(stream);
+                        return File(stream.ToArray(), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet", "Customer.xlsx");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.ToString() : string.Empty, this.GetType().Name + " : " + MethodBase.GetCurrentMethod().Name);
+                throw;
+            }
+        }
         #endregion
     }
 }

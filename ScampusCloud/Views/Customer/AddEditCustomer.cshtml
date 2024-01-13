@@ -56,7 +56,7 @@
 
                             @Html.HiddenFor(x => x.IsEdit)
                             @Html.HiddenFor(x => x.Id)
-                            @Html.HiddenFor(x => x.Isactive, new { id = "hdnIsActive" })
+                            @Html.HiddenFor(x => x.Isactive, new { id = "hdnIsactive" })
                             @Html.HiddenFor(x => x.CreatedBy)
                             @Html.HiddenFor(x => x.ModifiedBy)
                             @Html.HiddenFor(x => x.CompanyId)
@@ -162,7 +162,7 @@
                                                         </span>
                                                     </div>
                                                 </div>
-                                                </div>
+                                            </div>
                                             <!--end::Group-->
                                             <!--begin::Group-->
                                             <div class="form-group row">
@@ -225,6 +225,27 @@
                                                         @Html.TextBoxFor(m => m.PhoneNumber, new { @class = "form-control form-control-lg form-control-solid", @required = "required" })
                                                     </div>
                                                     @Html.ValidationMessageFor(m => m.PhoneNumber, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <!--end::Group-->
+                                            <!--begin::Group-->
+                                            <div class="form-group row">
+                                                <label class="col-form-label col-3 text-lg-right text-left">IsActive</label>
+                                                <div class="col-9">
+                                                    <span class='switch switch-icon'>
+                                                        <label>
+                                                            @if (Model.Isactive)
+                                                            {
+                                                                <input type='checkbox' id="chkIsactive" checked="checked">
+                                                            }
+                                                            else
+                                                            {
+                                                                <input type='checkbox' id="chkIsactive">
+                                                            }
+
+                                                            <span></span>
+                                                        </label>
+                                                    </span>
                                                 </div>
                                             </div>
                                             <!--end::Group-->
@@ -353,7 +374,7 @@
 
             if (extn[1] == "png" || extn[1] == "jpg" || extn[1] == "jpeg") {
 
-                var url = "@Url.Action("PreviewSelectedImage", "Staff")";
+                var url = "@Url.Action("PreviewSelectedImage", "Customer")";
                 $.ajax({
                     type: "POST",
                     url: url,
@@ -389,5 +410,9 @@
             var imageUrl = 'data:image/png;base64,'+defaultImg+'';
             $('#dv_EmpImag').css('background-image', 'url(' + imageUrl + ')');
         }
+        $("#chkIsactive").change(function () {
+            debugger;
+            $("#hdnIsactive").val($(this).is(':checked'));
+        });
     </script>
 }

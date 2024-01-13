@@ -46,8 +46,8 @@
                     </div>
                     <div class="card-toolbar col-lg-3 col-xl-4 justify-content-end">
                         <!--begin::Button-->
-                        <a class="btn btn-danger font-weight-bolder mr-2" asp-action="Index" asp-controller="Dashboard">
-                            <i class="flaticon2-left-arrow-1 icon-sm-nm"></i>Back
+                        <a class="btn btn-primary font-weight-bolder mr-2" onclick="DownloadExcel();">
+                            @*<i class="flaticon2-left-arrow-1 icon-sm-nm"></i>*@ <span class="svg-icon svg-icon-md">Export</span> 
                         </a>
                         <a href="/Customer/AddEditCustomer" class="btn btn-primary font-weight-bolder">
                             <span class="svg-icon svg-icon-md">
@@ -138,5 +138,20 @@
     $("#btnSearch").click(function () {
         LoadGridData();
     });
+        function DownloadExcel() {
+           // window.location = '/Customer/Export?searchtxt=' + $('#txt_search_query').val();
+            $.ajax({
+                type: "POST",
+                url: "/Customer/Export",
+                data: { "searchtxt": $('#txt_search_query').val()},
+                cache: false,
+                success: function (data) {
+                    //window.location = '/Excel/Download';
+                },
+                error: function (data) {
+                    //Materialize.toast("Something went wrong.", 3000, 'rounded');
+                }
+            });
+        }
     </script>
 }
