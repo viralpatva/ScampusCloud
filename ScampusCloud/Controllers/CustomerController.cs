@@ -238,7 +238,7 @@ namespace ScampusCloud.Controllers
         //    return base64OfThumbImg;
         //}
 
-        [HttpPost]
+        [HttpGet]
         public FileResult Export(string searchtxt = "")
         {
             DataTable dt = new DataTable("Customer");
