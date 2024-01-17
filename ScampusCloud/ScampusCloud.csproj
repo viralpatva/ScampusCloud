@@ -343,6 +343,7 @@
     <Compile Include="Controllers\DashboadController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\StudentDepartmentController.cs" />
     <Compile Include="DataBase\Database.cs" />
     <Compile Include="DataBase\DBExtension.cs" />
     <Compile Include="DataBase\FieldValue.cs" />
@@ -356,11 +357,13 @@
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
+    <Compile Include="Models\StudentDepartmentModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Country\CountryRepository.cs" />
     <Compile Include="Repository\Customer\CustomerRepository.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
+    <Compile Include="Repository\StudentDepartment\StudentDepartmentRepository.cs" />
     <Compile Include="Utility\common.cs" />
     <Compile Include="Utility\EncryptionDecryption.cs" />
     <Compile Include="Utility\ErrorLogger.cs" />
@@ -448,6 +451,8 @@
     <Content Include="Views\Country\Country.cshtml" />
     <Content Include="Views\Shared\_searchBarForDatatablePartial.cshtml" />
     <Content Include="Views\Country\AddEditCountry.cshtml" />
+    <Content Include="Views\StudentDepartment\StudentDepartment.cshtml" />
+    <Content Include="Views\StudentDepartment\AddEditStudentDepartment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
