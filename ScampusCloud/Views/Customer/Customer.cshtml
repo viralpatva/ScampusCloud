@@ -138,20 +138,22 @@
     $("#btnSearch").click(function () {
         LoadGridData();
     });
-        function DownloadExcel() {
-           // window.location = '/Customer/Export?searchtxt=' + $('#txt_search_query').val();
-            $.ajax({
-                type: "POST",
-                url: "/Customer/Export",
-                data: { "searchtxt": $('#txt_search_query').val()},
-                cache: false,
-                success: function (data) {
-                    //window.location = '/Excel/Download';
-                },
-                error: function (data) {
-                    //Materialize.toast("Something went wrong.", 3000, 'rounded');
-                }
-            });
+    function DownloadExcel() {
+            
+            window.location.href = '/Customer/Export?searchtxt=' + $('#txt_search_query').val();
+            $(".loading").hide();
+            //$.ajax({
+            //    type: "POST",
+            //    url: "/Customer/Export",
+            //    data: { "searchtxt": $('#txt_search_query').val()},
+            //    cache: false,
+            //    success: function (data) {
+            //        //window.location = '/Excel/Download';
+            //    },
+            //    error: function (data) {
+            //        //Materialize.toast("Something went wrong.", 3000, 'rounded');
+            //    }
+            //});
         }
     </script>
 }
