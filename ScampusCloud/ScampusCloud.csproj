@@ -338,6 +338,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\CampusController.cs" />
+    <Compile Include="Controllers\CardStatusController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboadController.cs" />
@@ -354,6 +356,8 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\CampusModel.cs" />
+    <Compile Include="Models\CardStatusModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\JobTitleModel.cs" />
@@ -364,6 +368,7 @@
     <Compile Include="Models\StudentFacilityModel.cs" />
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Repository\Campus\CampusRepository.cs" />
     <Compile Include="Repository\Country\CountryRepository.cs" />
     <Compile Include="Repository\Customer\CustomerRepository.cs" />
     <Compile Include="Repository\JobTitle\JobTitleRepository.cs" />
@@ -463,6 +468,8 @@
     <Content Include="Views\JobTitle\AddEditJobTitle.cshtml" />
     <Content Include="Views\StudentFacility\StudentFacility.cshtml" />
     <Content Include="Views\StudentFacility\AddEditStudentFacility.cshtml" />
+    <Content Include="Views\Campus\Campus.cshtml" />
+    <Content Include="Views\Campus\AddEditCampus.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -486,6 +493,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Logs\ErrorsLogs\Errors\" />
     <Folder Include="Repository\NewFolder2\" />
+    <Folder Include="Views\CardStatus\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
