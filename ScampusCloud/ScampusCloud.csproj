@@ -348,6 +348,7 @@
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StudentDepartmentController.cs" />
     <Compile Include="Controllers\StudentFacilityController.cs" />
+    <Compile Include="Controllers\VisitorAccessLevelController.cs" />
     <Compile Include="Controllers\VisitorReasonController.cs" />
     <Compile Include="Controllers\VisitorTypeController.cs" />
     <Compile Include="DataBase\Database.cs" />
@@ -369,6 +370,7 @@
     <Compile Include="Models\StudentDepartmentModel.cs" />
     <Compile Include="Models\StudentFacilityModel.cs" />
     <Compile Include="Models\UserModel.cs" />
+    <Compile Include="Models\VisitorAccessLevelModel.cs" />
     <Compile Include="Models\VisitorReasonModel.cs" />
     <Compile Include="Models\VisitorTypeModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -380,6 +382,7 @@
     <Compile Include="Repository\Login\LoginRepository.cs" />
     <Compile Include="Repository\StudentDepartment\StudentDepartmentRepository.cs" />
     <Compile Include="Repository\StudentFacility\StudentFacilityRepository.cs" />
+    <Compile Include="Repository\VisitorAccessLevel\VisitorAccessLevelRepository.cs" />
     <Compile Include="Repository\VisitorReason\VisitorReasonRepository.cs" />
     <Compile Include="Repository\VisitorType\VisitorTypeRepository.cs" />
     <Compile Include="Utility\common.cs" />
@@ -483,6 +486,8 @@
     <Content Include="Views\VisitorType\AddEditVisitorType.cshtml" />
     <Content Include="Views\VisitorReason\VisitorReason.cshtml" />
     <Content Include="Views\VisitorReason\AddEditVisitorReason.cshtml" />
+    <Content Include="Views\VisitorAccessLevel\VisitorAccessLevel.cshtml" />
+    <Content Include="Views\VisitorAccessLevel\AddEditVisitorAccessLevel.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
