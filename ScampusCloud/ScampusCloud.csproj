@@ -495,7 +495,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Logs\ErrorsLogs\Errors\" />
-    <Folder Include="Repository\NewFolder2\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
