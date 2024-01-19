@@ -340,6 +340,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\CampusController.cs" />
     <Compile Include="Controllers\CardStatusController.cs" />
+    <Compile Include="Controllers\CollegeController.cs" />
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboadController.cs" />
@@ -362,6 +363,7 @@
     </Compile>
     <Compile Include="Models\CampusModel.cs" />
     <Compile Include="Models\CardStatusModel.cs" />
+    <Compile Include="Models\CollegeModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\JobTitleModel.cs" />
@@ -378,6 +380,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Campus\CampusRepository.cs" />
     <Compile Include="Repository\CardStatus\CardStatusRepository.cs" />
+    <Compile Include="Repository\College\CollegeRepository.cs" />
     <Compile Include="Repository\Country\CountryRepository.cs" />
     <Compile Include="Repository\Customer\CustomerRepository.cs" />
     <Compile Include="Repository\JobTitle\JobTitleRepository.cs" />
@@ -493,6 +496,8 @@
     <Content Include="Views\VisitorAccessLevel\AddEditVisitorAccessLevel.cshtml" />
     <Content Include="Views\StudentCompany\StudentCompany.cshtml" />
     <Content Include="Views\StudentCompany\AddEditStudentCompany.cshtml" />
+    <Content Include="Views\College\College.cshtml" />
+    <Content Include="Views\College\AddEditCollege.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
