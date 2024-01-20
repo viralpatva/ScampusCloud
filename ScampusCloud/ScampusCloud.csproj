@@ -344,6 +344,7 @@
     <Compile Include="Controllers\CountryController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashboadController.cs" />
+    <Compile Include="Controllers\DegreeTypeController.cs" />
     <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProgramController.cs" />
@@ -369,6 +370,7 @@
     <Compile Include="Models\CollegeModel.cs" />
     <Compile Include="Models\CountryModel.cs" />
     <Compile Include="Models\CustomerModel.cs" />
+    <Compile Include="Models\DegreeTypeModel.cs" />
     <Compile Include="Models\JobTitleModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProgramModel.cs" />
@@ -389,6 +391,7 @@
     <Compile Include="Repository\College\CollegeRepository.cs" />
     <Compile Include="Repository\Country\CountryRepository.cs" />
     <Compile Include="Repository\Customer\CustomerRepository.cs" />
+    <Compile Include="Repository\DegreeType\DegreeTypeRepository.cs" />
     <Compile Include="Repository\JobTitle\JobTitleRepository.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
     <Compile Include="Repository\Program\ProgramRepository.cs" />
@@ -513,6 +516,8 @@
     <Content Include="Views\StaffDepartment\AddEditStaffDepartment.cshtml" />
     <Content Include="Views\Program\Program.cshtml" />
     <Content Include="Views\Program\AddEditProgram.cshtml" />
+    <Content Include="Views\DegreeType\DegreeType.cshtml" />
+    <Content Include="Views\DegreeType\AddEditDegreeType.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
