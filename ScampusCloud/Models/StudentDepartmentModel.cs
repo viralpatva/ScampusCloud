@@ -15,6 +15,9 @@ namespace ScampusCloud.Models
 
         [Required(ErrorMessage = "Please enter name")]
         public string Name { get; set; }
+        public int CollegeId { get; set; }
+        public List<SelectListItem> lstCollege { get; set; }
+        public string CollegeName { get; set; }
         public bool IsEdit { get; set; }
         public bool IsDeleted { get; set; }
         public bool IsActive { get; set; }

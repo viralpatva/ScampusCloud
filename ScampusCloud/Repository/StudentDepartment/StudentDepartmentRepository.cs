@@ -7,6 +7,7 @@ using System.Data;
 using System.Linq;
 using System.Reflection;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ScampusCloud.Repository.StudentDepartment
 {
@@ -26,6 +27,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 
 				objQueryBuilder.AddFieldValue("@Id", _StudentDepartmentModel.Id, DataTypes.Numeric, false);
 				objQueryBuilder.AddFieldValue("@Name", _StudentDepartmentModel.Name, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CollegeId", _StudentDepartmentModel.CollegeId, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@CompanyId", _StudentDepartmentModel.CompanyId, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@Code", _StudentDepartmentModel.Code, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@Isactive", _StudentDepartmentModel.IsActive, DataTypes.Boolean, false);
@@ -103,6 +105,17 @@ namespace ScampusCloud.Repository.StudentDepartment
 				ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.ToString() : string.Empty, this.GetType().Name + " : " + MethodBase.GetCurrentMethod().Name);
 				throw;
 			}
+		}
+		public List<SelectListItem> BindDropDown(string CompanyId)
+		{
+			QueryBuilder objQueryBuilder = new QueryBuilder
+			{
+				TableName = "tbl_Campus",
+				StoredProcedureName = @"Sps_Load_College_Dropdown",
+				SetQueryType = QueryBuilder.QueryType.SELECT,
+			};
+			objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
+			return objgm.GetListUsingSp<SelectListItem>(objQueryBuilder);
 		}
 	}
 }

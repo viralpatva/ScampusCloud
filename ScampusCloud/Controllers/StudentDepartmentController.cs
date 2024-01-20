@@ -82,6 +82,7 @@ namespace ScampusCloud.Controllers
                     _StudentDepartmentModel.IsActive = true;
                     //HttpContext.Session.SetString("Original_Id", "");
                 }
+                _StudentDepartmentModel.lstCollege = BindDropdown(Session["CompanyId"].ToString());
                 return View(_StudentDepartmentModel);
             }
             catch (Exception ex)
@@ -137,6 +138,7 @@ namespace ScampusCloud.Controllers
                     strHTML.Append("<tr class='datatable-row'>");
                     strHTML.Append("<th class='datatable-cell'>Code</th>");
                     strHTML.Append("<th class='datatable-cell'>Name</th>");
+                    strHTML.Append("<th class='datatable-cell'>Collage</th>");
                     strHTML.Append("<th class='datatable-cell'>Status</th>");
                     strHTML.Append("<th class='datatable-cell'>Action</th>");
                     strHTML.Append("</tr>");
@@ -148,6 +150,7 @@ namespace ScampusCloud.Controllers
                         strHTML.Append("<tr>");
                         strHTML.Append("<td>" + item.Code + "</td>");
                         strHTML.Append("<td>" + item.Name + "</td>");
+                        strHTML.Append("<td>" + item.CollegeName + "</td>");
                         if (item.IsActive)
                             strHTML.Append("<td><span><span class='label font-weight-bold label-lg label-light-primary label-inline'>Active</span></span></td>");
                         else
@@ -253,6 +256,15 @@ namespace ScampusCloud.Controllers
                 ErrorLogger.WriteToErrorLog(ex.Message, ex.StackTrace, ex.InnerException != null ? ex.InnerException.ToString() : string.Empty, this.GetType().Name + " : " + MethodBase.GetCurrentMethod().Name);
                 throw;
             }
+        }
+        #endregion
+
+        #region Private method
+        private List<SelectListItem> BindDropdown(string CompanyId)
+        {
+            List<SelectListItem> drpList = new List<SelectListItem>();
+            drpList = _StudentDepartmentRepository.BindDropDown(CompanyId);
+            return drpList;
         }
         #endregion
     }
