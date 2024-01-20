@@ -347,6 +347,7 @@
     <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
+    <Compile Include="Controllers\StaffDepartmentController.cs" />
     <Compile Include="Controllers\StudentCompanyController.cs" />
     <Compile Include="Controllers\StudentDepartmentController.cs" />
     <Compile Include="Controllers\StudentFacilityController.cs" />
@@ -369,6 +370,7 @@
     <Compile Include="Models\CustomerModel.cs" />
     <Compile Include="Models\JobTitleModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
+    <Compile Include="Models\StaffDepartmentModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
     <Compile Include="Models\StudentCompanyModel.cs" />
@@ -387,6 +389,7 @@
     <Compile Include="Repository\Customer\CustomerRepository.cs" />
     <Compile Include="Repository\JobTitle\JobTitleRepository.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
+    <Compile Include="Repository\StaffDepartment\StaffDepartmentRepository.cs" />
     <Compile Include="Repository\StudentCompany\StudentCompany.cs" />
     <Compile Include="Repository\StudentDepartment\StudentDepartmentRepository.cs" />
     <Compile Include="Repository\StudentFacility\StudentFacilityRepository.cs" />
@@ -503,6 +506,8 @@
     <Content Include="Views\College\AddEditCollege.cshtml" />
     <Content Include="Views\Year\Year.cshtml" />
     <Content Include="Views\Year\AddEditYear.cshtml" />
+    <Content Include="Views\StaffDepartment\StaffDepartment.cshtml" />
+    <Content Include="Views\StaffDepartment\AddEditStaffDepartment.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
