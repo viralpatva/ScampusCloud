@@ -134,41 +134,49 @@ namespace ScampusCloud.Controllers
             {
                 searchtxt = string.IsNullOrEmpty(searchtxt) ? "" : searchtxt;
                 int totals = Convert.ToInt32(_StaffRepository.GetAllCount(searchtxt));
-                var lstAccessGroup = _StaffRepository.GetStaffList(searchtxt, page, pagesize);
+                var lstStaff = _StaffRepository.GetStaffList(searchtxt, page, pagesize);
                 Session["totalrecords"] = Convert.ToString(totals);
                 Session["paging_size"] = Convert.ToString(pagesize);
                 ViewData["totalrecords"] = totals;
                 ViewData["paging_size"] = pagesize;
                 StringBuilder strHTML = new StringBuilder();
-                if (lstAccessGroup.Count > 0)
+                if (lstStaff.Count > 0)
                 {
                     strHTML.Append("<table class='datatable-bordered datatable-head-custom datatable-table' id='kt_datatable'>");
                     strHTML.Append("<thead class='datatable-head'>");
                     strHTML.Append("<tr class='datatable-row'>");
-                    strHTML.Append("<th class='datatable-cell'>Id</th>");
+                    strHTML.Append("<th class='datatable-cell'>Code</th>");
                     strHTML.Append("<th class='datatable-cell'>Name</th>");
-                    strHTML.Append("<th class='datatable-cell'>EmailId</th>");
-                    strHTML.Append("<th class='datatable-cell'>Phone Number</th>");
-                    strHTML.Append("<th class='datatable-cell'>Status</th>");
+                    strHTML.Append("<th class='datatable-cell'>Staff ID</th>");
+                    strHTML.Append("<th class='datatable-cell'>Email</th>");
+                    strHTML.Append("<th class='datatable-cell'>Department</th>");
+                    strHTML.Append("<th class='datatable-cell hide'>Job Title</th>");
                     strHTML.Append("<th class='datatable-cell'>Action</th>");
                     strHTML.Append("</tr>");
                     strHTML.Append("</thead>");
                     strHTML.Append("<tbody class='datatable-body custom-scroll'>");
-                    foreach (var item in lstAccessGroup)
+                    foreach (var item in lstStaff)
                     {
-                        string DeleteConfirmationEvent = "DeleteConfirmation('" + item.Id + "','Staff','Staff','Delete')";
-                        strHTML.Append("<tr>");
-                        strHTML.Append("<td>" + item.Id + "</td>");
-                        strHTML.Append("<td>" + item.FullName + "</td>");
-                        strHTML.Append("<td>" + item.EmailId + "</td>");
-                        strHTML.Append("<td>" + item.PersonalPhone + "</td>");
-                        if (item.Isactive)
-                            strHTML.Append("<td><span><span class='label font-weight-bold label-lg label-light-primary label-inline'>Active</span></span></td>");
-                        else
-                            strHTML.Append("<td><span><span class='label font-weight-bold label-lg label-light-danger label-inline'>InActive</span></span></td>");
+                        string ImgSrc = string.Empty;
+                        string DeleteConfirmationEvent = "DeleteConfirmation('" + item.StaffId + "','Staff','Staff','Delete')";
+                        string CardManagementEvent = "CardManagement('" + item.Id + "')";
+                        //if (!string.IsNullOrEmpty(item.Image64byte))
+                        //    ImgSrc = "data:image/jpg;base64," + item.Image64byte;
+                        //else
+                        //    ImgSrc = "data:image/jpg;base64," + Constant.DefaultPersonIconBase64String;
 
+                        strHTML.Append("<tr>");
+                        strHTML.Append("<td>" + item.Code + "</td>");
+                        strHTML.Append("<td style='width:250px;'><span><div class='d-flex align-items-center'><div class='symbol symbol-40 flex-shrink-0'><img src='" + ImgSrc + "' style='height:40px;border-radius:100%;border:1px solid;' alt='photo'></div>" +
+                            "<div class='ml-4'>" +
+                            "<a href='#' class='font-size-sm text-dark-50 text-hover-primary'>" + item.FullName + "</a></div></div></span></td>");
+                        strHTML.Append("<td>" + item.StaffId + "</td>");
+                        strHTML.Append("<td>" + (item.EmailId ?? "NA") + "</td>");
+                        strHTML.Append("<td>" + (item.DepartmentName ?? "NA") + "</td>");
+                        strHTML.Append("<td class='hide'>" + (item.JobTitleName ?? "NA") + "</td>");
                         strHTML.Append("<td>");
                         strHTML.Append("<a class='btn btn-sm btn-icon btn-lg-light btn-text-primary btn-hover-light-primary mr-3' href= '/Staff/AddEditStaff?ID=" + item.Id + "'><i class='flaticon-edit'></i></a>");
+                        strHTML.Append("<a class='btn btn-sm btn-icon btn-lg-light btn-text-primary btn-hover-light-primary mr-3'  onclick=" + CardManagementEvent + "><i class='far fa-id-card'></i></a>");
                         strHTML.Append("<a id = 'del_" + item.Id + "' class='btn btn-sm btn-icon btn-lg-light btn-text-danger btn-hover-light-danger' onclick=" + DeleteConfirmationEvent + "><i class='flaticon-delete'></i></a>");
                         strHTML.Append("</td>");
                         strHTML.Append("</tr>");

@@ -23,7 +23,7 @@ namespace ScampusCloud.Models
 		public string FullNameAmharic { get; set; }
 
 		[Required(ErrorMessage = "Birth Of Date is required")]
-		public DateTime BirthDate { get; set; }	
+		public string BirthDate { get; set; }	
 		public string Gender { get; set; }	
 		public string BloodGroup { get; set; }
 		public string PersonalPhone { get; set; }
@@ -53,7 +53,7 @@ namespace ScampusCloud.Models
 		public List<SelectListItem> lstCardStatus { get; set; }
 
 		[Required(ErrorMessage = "Issue Date is required")]
-		public DateTime IssueDate { get; set; }
+		public string IssueDate { get; set; }
 		public string UID { get; set; }
 		public string VehicleNumber { get; set; }
 		[Required(ErrorMessage = "Card Number is required")]
@@ -70,6 +70,10 @@ namespace ScampusCloud.Models
 		public Guid? ModifiedBy { get; set; }
 		public string ActionType { get; set; }
 		public bool? IsEdit { get; set; }
+
+		public string DepartmentName { get; set; }
+		public string JobTitleName { get; set; }
+
 	}
 
 }

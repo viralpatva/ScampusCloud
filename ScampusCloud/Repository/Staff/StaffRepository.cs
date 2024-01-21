@@ -25,22 +25,48 @@ namespace ScampusCloud.Repository.Staff
 					StoredProcedureName = @"SP_Staff_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _StaffModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _StaffModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Name", _StaffModel.FullName, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Address", _StaffModel.Address, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Website", _StaffModel.FullNameAmharic, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@EmailId", _StaffModel.EmailId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@PhoneNumber", _StaffModel.PersonalPhone, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _StaffModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _StaffModel.ModifiedBy, DataTypes.Text, false);
+				if (_StaffModel.ActionType == "Edit" || _StaffModel.ActionType == "Delete")
+				{
+					objQueryBuilder.AddFieldValue("@Id", _StaffModel.Id, DataTypes.Numeric, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _StaffModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@StaffId", _StaffModel.StaffId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@FullName", _StaffModel.FullName, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StaffModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _StaffModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@FullNameAmharic", _StaffModel.FullNameAmharic, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@BirthDate", _StaffModel.BirthDate, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Gender", _StaffModel.Gender, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@BloodGroup", _StaffModel.BloodGroup, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@PersonalPhone", _StaffModel.PersonalPhone, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@EmailId", _StaffModel.EmailId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Password", EncryptionDecryption.GetEncrypt(_StaffModel.Password), DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Address", _StaffModel.Address, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CountryId", _StaffModel.CountryId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@DepartmentId", _StaffModel.DepartmentId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@JobTitleId", _StaffModel.JobTitleId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyMstrId", _StaffModel.CompanyMstrId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@FacilityId", _StaffModel.FacilityId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CanteenId", _StaffModel.CanteenId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CardStatusId", _StaffModel.CardStatusId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@IssueDate", _StaffModel.IssueDate, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@UID", _StaffModel.UID, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@VehicleNumber", _StaffModel.VehicleNumber, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CardNumber", _StaffModel.CardNumber, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Woreda", _StaffModel.Woreda, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@SubCity", _StaffModel.SubCity, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@HouseNumber", _StaffModel.HouseNumber, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ImagePath", _StaffModel.ImagePath, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@SignaturePath", _StaffModel.SignaturePath, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ImageBase64", _StaffModel.ImageBase64, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@SignatureBase64", _StaffModel.SignatureBase64, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _StaffModel.Isactive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _StaffModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _StaffModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _StaffModel.ActionType, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@AdminUserEmailId", _StaffModel.EmailId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@AdminUserPhoneNumber", _StaffModel.PersonalPhone, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@AdminUserPassword", EncryptionDecryption.GetEncrypt(_StaffModel.Password), DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _StaffModel.Isactive, DataTypes.Boolean, false);
-
 				return objgm.ExecuteObjectUsingSp<StaffModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
