@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace ScampusCloud.Controllers
 {
+    [SessionTimeoutAttribute]
     public class VisitorTypeController : Controller
     {
         #region Variable Declaration
@@ -44,9 +45,9 @@ namespace ScampusCloud.Controllers
             try
             {
 
-                _VisitorTypeModel.CreatedBy = new Guid(Session["UserId"].ToString());
-                _VisitorTypeModel.ModifiedBy = new Guid(Session["UserId"].ToString());
-                _VisitorTypeModel.CompanyId = new Guid(Session["CompanyId"].ToString());
+                _VisitorTypeModel.CreatedBy = SessionManager.UserId;
+                _VisitorTypeModel.ModifiedBy = SessionManager.UserId;
+                _VisitorTypeModel.CompanyId = SessionManager.CompanyId;
 
                 if (!string.IsNullOrEmpty(ID) && ID != "0")
                 {

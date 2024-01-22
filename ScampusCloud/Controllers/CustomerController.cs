@@ -15,6 +15,7 @@ using System.Web.Mvc;
 
 namespace ScampusCloud.Controllers
 {
+    [SessionTimeoutAttribute]
     public class CustomerController : Controller
     {
 
@@ -47,9 +48,9 @@ namespace ScampusCloud.Controllers
             try
             {
 
-                _CustomerModel.CreatedBy = new Guid(Session["UserId"].ToString());
-                _CustomerModel.ModifiedBy = new Guid(Session["UserId"].ToString());
-                _CustomerModel.CompanyId = new Guid(Session["CompanyId"].ToString());
+                _CustomerModel.CreatedBy = SessionManager.UserId;
+                _CustomerModel.ModifiedBy = SessionManager.UserId;
+                _CustomerModel.CompanyId = SessionManager.CompanyId;
 
                 if (!string.IsNullOrEmpty(ID) && ID != "0")
                 {

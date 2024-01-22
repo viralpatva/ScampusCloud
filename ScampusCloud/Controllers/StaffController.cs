@@ -12,9 +12,11 @@ using System.Reflection;
 using System.Text;
 using System.Web;
 using System.Web.Mvc;
+using static ScampusCloud.RouteConfig;
 
 namespace ScampusCloud.Controllers
 {
+    [SessionTimeoutAttribute]
     public class StaffController : Controller
     {
 
@@ -47,9 +49,9 @@ namespace ScampusCloud.Controllers
             try
             {
 
-                _StaffModel.CreatedBy = new Guid(Session["UserId"].ToString());
-                _StaffModel.ModifiedBy = new Guid(Session["UserId"].ToString());
-                _StaffModel.CompanyId = new Guid(Session["CompanyId"].ToString());
+                _StaffModel.CreatedBy = SessionManager.UserId;
+                _StaffModel.ModifiedBy = SessionManager.UserId;
+                _StaffModel.CompanyId = SessionManager.CompanyId;
 
                 if (!string.IsNullOrEmpty(ID) && ID != "0")
                 {

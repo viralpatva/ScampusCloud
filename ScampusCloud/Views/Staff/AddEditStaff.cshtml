@@ -176,9 +176,9 @@
                                                 <label class="col-form-label col-3 text-lg-right text-left">Photo</label>
                                                 <div class="col-3">
                                                     <div class="image-input image-input-outline" id="dv_EmpImag">
-                                                        @*style="background-image: url(data:image/png;base64,@Model.Image64byte)"*@
+                                                        @*style="background-image: url(data:image/png;base64,@Model.ImageBase64)"*@
                                                         <div class="image-input-wrapper commonBgSize empimage"></div>
-                                                        @*style="background-image: url(data:image/png;base64,@Model.Image64byte)"*@
+                                                        @*style="background-image: url(data:image/png;base64,@Model.ImageBase64)"*@
                                                         <input type="hidden" asp-for="Image64byte" id="empImgSrc" />
                                                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Add/Update Image">
                                                             <i class="fa fa-pen icon-sm text-muted"></i>

@@ -14,6 +14,7 @@ using System.Web.Mvc;
 
 namespace ScampusCloud.Controllers
 {
+    [SessionTimeoutAttribute]
     public class VisitorAccessLevelController : Controller
     {
         #region Variable Declaration
@@ -44,9 +45,9 @@ namespace ScampusCloud.Controllers
             try
             {
 
-                _VisitorAccessLevelModel.CreatedBy = new Guid(Session["UserId"].ToString());
-                _VisitorAccessLevelModel.ModifiedBy = new Guid(Session["UserId"].ToString());
-                _VisitorAccessLevelModel.CompanyId = new Guid(Session["CompanyId"].ToString());
+                _VisitorAccessLevelModel.CreatedBy = SessionManager.UserId;
+                _VisitorAccessLevelModel.ModifiedBy = SessionManager.UserId;
+                _VisitorAccessLevelModel.CompanyId = SessionManager.CompanyId;
 
                 if (!string.IsNullOrEmpty(ID) && ID != "0")
                 {

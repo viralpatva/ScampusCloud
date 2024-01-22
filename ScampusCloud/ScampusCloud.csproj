@@ -411,6 +411,8 @@
     <Compile Include="Utility\EncryptionDecryption.cs" />
     <Compile Include="Utility\ErrorLogger.cs" />
     <Compile Include="Utility\ImageCompressor.cs" />
+    <Compile Include="Utility\SessionManager.cs" />
+    <Compile Include="Utility\SessionTimeoutAttribute.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

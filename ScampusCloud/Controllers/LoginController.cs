@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace ScampusCloud.Controllers
 {
+    
     public class LoginController : Controller
     {
         #region Variable Declaration
@@ -43,10 +44,10 @@ namespace ScampusCloud.Controllers
                     var officemaster = _loginRepository.Get_User(_LoginModel);
                     if (officemaster != null)
                     {
-                        Session["UserName"] = _LoginModel.EmailId;
-                        Session["CompanyId"] = officemaster.ParentUserId;
-                        Session["Name"] = officemaster.Name;
-                        Session["UserId"] = officemaster.UserId;
+                        SessionManager.UserName = _LoginModel.EmailId;
+                        SessionManager.CompanyId = officemaster.ParentUserId;
+                        SessionManager.Name = officemaster.Name;
+                        SessionManager.UserId = officemaster.UserId;
                     return RedirectToAction("Dashboad", "Dashboad");
 
                     }
