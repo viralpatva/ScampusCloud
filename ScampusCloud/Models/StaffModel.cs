@@ -13,6 +13,7 @@ namespace ScampusCloud.Models
 		public Guid? CompanyId { get; set; }
 
 		[Required(ErrorMessage = "Staff Id is required")]
+		[Remote(action: "IsStaffIdExist", controller: "RemoteValidation",ErrorMessage = "Staff Id is already in use.")]
 		public string StaffId { get; set; }
 
 		[Required(ErrorMessage = "Full Name is required")]

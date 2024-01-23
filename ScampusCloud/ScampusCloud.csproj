@@ -349,6 +349,7 @@
     <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProgramController.cs" />
+    <Compile Include="Controllers\RemoteValidationController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StaffDepartmentController.cs" />
     <Compile Include="Controllers\StudentCompanyController.cs" />
@@ -548,6 +549,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Logs\ErrorsLogs\Errors\" />
+    <Folder Include="Views\RemoteValidation\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

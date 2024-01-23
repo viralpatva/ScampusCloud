@@ -83,7 +83,7 @@ namespace ScampusCloud.Controllers
                     _StudentDepartmentModel.IsActive = true;
                     //HttpContext.Session.SetString("Original_Id", "");
                 }
-                _StudentDepartmentModel.lstCollege = BindDropdown(Session["CompanyId"].ToString());
+                _StudentDepartmentModel.lstCollege = BindDropdown(SessionManager.CompanyId.ToString());
                 return View(_StudentDepartmentModel);
             }
             catch (Exception ex)

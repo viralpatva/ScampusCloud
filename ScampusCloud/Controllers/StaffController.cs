@@ -62,6 +62,7 @@ namespace ScampusCloud.Controllers
                     if (_StaffModel != null)
                     {
                         _StaffModel.IsEdit = true;
+                        SessionManager.StaffId= _StaffModel.StaffId;
                         _StaffModel.Password = !string.IsNullOrEmpty(_StaffModel.Password) ? EncryptionDecryption.GetDecrypt(_StaffModel.Password) : string.Empty;
                         //if (model.Code == null)
                         //    model.Code = "";
@@ -72,7 +73,7 @@ namespace ScampusCloud.Controllers
                         _StaffModel = new StaffModel();
                         ViewBag.NoRecordExist = true;
                         _StaffModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.StaffId = null;
                     }
                     #endregion
                 }
@@ -85,15 +86,15 @@ namespace ScampusCloud.Controllers
                 {
                     _StaffModel.IsEdit = false;
                     _StaffModel.Isactive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.StaffId = null;
                 }
-                _StaffModel.lstCountry = BindCountryDropdown(Session["CompanyId"].ToString());
-                _StaffModel.lstDepartment = BindStaffDepartmentDropDown(Session["CompanyId"].ToString());
-                _StaffModel.lstJobTitle = BindJobTitleDropDown(Session["CompanyId"].ToString());
-                _StaffModel.lstCompany = BindStudentCompanyDropDown(Session["CompanyId"].ToString());
-                _StaffModel.lstFacility = BindFacilityDropDown(Session["CompanyId"].ToString());
-                _StaffModel.lstCardStatus = BindCardStatusDropDown(Session["CompanyId"].ToString());
-                _StaffModel.lstCanteen = BindCanteenDropDown(Session["CompanyId"].ToString());
+                _StaffModel.lstCountry = BindCountryDropdown(SessionManager.CompanyId.ToString());
+                _StaffModel.lstDepartment = BindStaffDepartmentDropDown(SessionManager.CompanyId.ToString());
+                _StaffModel.lstJobTitle = BindJobTitleDropDown(SessionManager.CompanyId.ToString());
+                _StaffModel.lstCompany = BindStudentCompanyDropDown(SessionManager.CompanyId.ToString());
+                _StaffModel.lstFacility = BindFacilityDropDown(SessionManager.CompanyId.ToString());
+                _StaffModel.lstCardStatus = BindCardStatusDropDown(SessionManager.CompanyId.ToString());
+                _StaffModel.lstCanteen = BindCanteenDropDown(SessionManager.CompanyId.ToString());
                 return View(_StaffModel);
             }
             catch (Exception ex)
@@ -324,5 +325,6 @@ namespace ScampusCloud.Controllers
             return drpList;
         }
         #endregion
+
     }
 }
