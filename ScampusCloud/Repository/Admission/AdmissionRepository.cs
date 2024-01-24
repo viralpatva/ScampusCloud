@@ -23,17 +23,23 @@ namespace ScampusCloud.Repository.Admission
 					StoredProcedureName = @"SP_Admission_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _AdmissionModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _AdmissionModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Type", _AdmissionModel.Type, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _AdmissionModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _AdmissionModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _AdmissionModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _AdmissionModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _AdmissionModel.ModifiedBy, DataTypes.Text, false);
+				if (_AdmissionModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _AdmissionModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _AdmissionModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _AdmissionModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _AdmissionModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Type", _AdmissionModel.Type, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _AdmissionModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _AdmissionModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _AdmissionModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _AdmissionModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _AdmissionModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _AdmissionModel.ActionType, DataTypes.Text, false);
-
 				return objgm.ExecuteObjectUsingSp<AdmissionModel>(objQueryBuilder);
 			}
 			catch (Exception ex)

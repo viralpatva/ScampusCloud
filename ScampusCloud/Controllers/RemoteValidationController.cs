@@ -1,4 +1,5 @@
 ﻿using ScampusCloud.Models;
+using ScampusCloud.Repository.Admission;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Utility;
 using System;
@@ -13,9 +14,11 @@ namespace ScampusCloud.Controllers
     public class RemoteValidationController : Controller
     {
         StaffModel Staff = new StaffModel();
+        AdmissionModel Admission = new AdmissionModel();
         public RemoteValidationController()
         {
         }
+        #region Staff
         [HttpPost]
         public ActionResult IsStaffIdExist(string StaffId = "")
         {
@@ -107,6 +110,39 @@ namespace ScampusCloud.Controllers
                 return Json(false);
 
         }
+        #endregion
 
+        #region Admission
+        [HttpPost]
+        public ActionResult IsAdmissionCodeExist(string Code = "")
+        {
+            AdmissionRepository _Repository = new AdmissionRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                Admission.ActionType = "Remote";
+                Admission.Code = Code;
+                Admission.CompanyId = SessionManager.CompanyId;
+                Admission = _Repository.AddEdit_Admission(Admission);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Admission.ActionType = "Remote";
+                Admission.Code = Code;
+                Admission.CompanyId = SessionManager.CompanyId;
+                Admission = _Repository.AddEdit_Admission(Admission);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (Admission == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
     }
 }

@@ -58,7 +58,7 @@ namespace ScampusCloud.Controllers
                     if (_AdmissionModel != null)
                     {
                         _AdmissionModel.IsEdit = true;
-
+                        SessionManager.Code = _AdmissionModel.Code;
                         //if (model.Code == null)
                         //    model.Code = "";
                         //HttpContext.Session.SetString("Original_Id", model.Code);
@@ -68,7 +68,7 @@ namespace ScampusCloud.Controllers
                         _AdmissionModel = new AdmissionModel();
                         ViewBag.NoRecordExist = true;
                         _AdmissionModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +81,7 @@ namespace ScampusCloud.Controllers
                 {
                     _AdmissionModel.IsEdit = false;
                     _AdmissionModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_AdmissionModel);
             }
