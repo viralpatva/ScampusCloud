@@ -77,5 +77,34 @@ namespace ScampusCloud.Utility
                 HttpContext.Current.Session["StaffId"] = value;
             }
         }
+
+        public static String EmailId
+        {
+            get
+            {
+                if (HttpContext.Current.Session["EmailId"] == null)
+                    return null;
+                else
+                    return HttpContext.Current.Session["EmailId"].ToString();
+            }
+            set
+            {
+                HttpContext.Current.Session["EmailId"] = value;
+            }
+        }
+        public static String Code
+        {
+            get
+            {
+                if (HttpContext.Current.Session["Code"] == null)
+                    return null;
+                else
+                    return HttpContext.Current.Session["Code"].ToString();
+            }
+            set
+            {
+                HttpContext.Current.Session["Code"] = value;
+            }
+        }
     }
 }

@@ -16,6 +16,7 @@ namespace ScampusCloud.Controllers
         public RemoteValidationController()
         {
         }
+        [HttpPost]
         public ActionResult IsStaffIdExist(string StaffId = "")
         {
             StaffRepository _StaffRepository = new StaffRepository();
@@ -45,5 +46,67 @@ namespace ScampusCloud.Controllers
                 return Json(false);
 
         }
+        [HttpPost]
+        public ActionResult IsEmailIdExist(string EmailId = "")
+        {
+            StaffRepository _StaffRepository = new StaffRepository();
+            string Original_EmailId = SessionManager.EmailId;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_EmailId) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_EmailId, EmailId))
+            {
+                Staff.ActionType = "Remote";
+                Staff.EmailId = EmailId;
+                Staff.CompanyId = SessionManager.CompanyId;
+                Staff = _StaffRepository.AddEdit_Staff(Staff);
+                returnMsg = $"Email Id '{EmailId}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Staff.ActionType = "Remote";
+                Staff.EmailId = EmailId;
+                Staff.CompanyId = SessionManager.CompanyId;
+                Staff = _StaffRepository.AddEdit_Staff(Staff);
+                returnMsg = $"Email Id '{EmailId}' is already in use.";
+            }
+            if (Staff == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+
+        [HttpPost]
+        public ActionResult IsCodeExist(string Code = "")
+        {
+            StaffRepository _StaffRepository = new StaffRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                Staff.ActionType = "Remote";
+                Staff.Code = Code;
+                Staff.CompanyId = SessionManager.CompanyId;
+                Staff = _StaffRepository.AddEdit_Staff(Staff);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Staff.ActionType = "Remote";
+                Staff.Code = Code;
+                Staff.CompanyId = SessionManager.CompanyId;
+                Staff = _StaffRepository.AddEdit_Staff(Staff);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (Staff == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+
     }
 }

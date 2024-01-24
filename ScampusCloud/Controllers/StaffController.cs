@@ -63,6 +63,8 @@ namespace ScampusCloud.Controllers
                     {
                         _StaffModel.IsEdit = true;
                         SessionManager.StaffId= _StaffModel.StaffId;
+                        SessionManager.EmailId = _StaffModel.EmailId;
+                        SessionManager.Code = _StaffModel.Code;
                         _StaffModel.Password = !string.IsNullOrEmpty(_StaffModel.Password) ? EncryptionDecryption.GetDecrypt(_StaffModel.Password) : string.Empty;
                         //if (model.Code == null)
                         //    model.Code = "";
@@ -74,6 +76,8 @@ namespace ScampusCloud.Controllers
                         ViewBag.NoRecordExist = true;
                         _StaffModel.Response_Message = "No record found";
                         SessionManager.StaffId = null;
+                        SessionManager.EmailId = null;
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -87,6 +91,8 @@ namespace ScampusCloud.Controllers
                     _StaffModel.IsEdit = false;
                     _StaffModel.Isactive = true;
                     SessionManager.StaffId = null;
+                    SessionManager.EmailId = null;
+                    SessionManager.Code = null;
                 }
                 _StaffModel.lstCountry = BindCountryDropdown(SessionManager.CompanyId.ToString());
                 _StaffModel.lstDepartment = BindStaffDepartmentDropDown(SessionManager.CompanyId.ToString());

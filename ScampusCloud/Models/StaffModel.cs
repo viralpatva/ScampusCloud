@@ -13,13 +13,14 @@ namespace ScampusCloud.Models
 		public Guid? CompanyId { get; set; }
 
 		[Required(ErrorMessage = "Staff Id is required")]
-		[Remote(action: "IsStaffIdExist", controller: "RemoteValidation",ErrorMessage = "Staff Id is already in use.")]
+		[Remote(action: "IsStaffIdExist", controller: "RemoteValidation",HttpMethod ="POST",ErrorMessage = "Staff Id is already in use.")]
 		public string StaffId { get; set; }
 
 		[Required(ErrorMessage = "Full Name is required")]
 		public string FullName { get; set; }
 
 		[Required(ErrorMessage = "Code is required")]
+		[Remote(action: "IsCodeExist", controller: "RemoteValidation", HttpMethod = "POST", ErrorMessage = "Code is already in use.")]
 		public string Code { get; set; }
 		public string FullNameAmharic { get; set; }
 
@@ -31,6 +32,7 @@ namespace ScampusCloud.Models
 
 		[Required(ErrorMessage = "Email Address is required")]
 		[RegularExpression(@"^[_a-z0-9-]+(\.[_a-z0-9-]+)*(\+[a-z0-9-]+)?@[a-z0-9-]+(\.[a-z0-9-]+)*$", ErrorMessage = "Invalid Email Address Format")]
+		[Remote(action: "IsEmailIdExist", controller: "RemoteValidation", HttpMethod = "POST", ErrorMessage = "Email Id is already in use.")]
 		public string EmailId { get; set; }
 		[Required(ErrorMessage = "Password is required")]
 		//[RegularExpression(@"(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,20}$", ErrorMessage = "Your password must be at least 6 to 20 characters long")]
