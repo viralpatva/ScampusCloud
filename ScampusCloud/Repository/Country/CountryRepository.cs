@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.Country
 					StoredProcedureName = @"SP_Country_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _CountryModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _CountryModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _CountryModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _CountryModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _CountryModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _CountryModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _CountryModel.ModifiedBy, DataTypes.Text, false);
+				if (_CountryModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _CountryModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CountryModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _CountryModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _CountryModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CountryModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _CountryModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _CountryModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _CountryModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _CountryModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _CountryModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<CountryModel>(objQueryBuilder);

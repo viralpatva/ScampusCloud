@@ -2,6 +2,8 @@
 using ScampusCloud.Repository.Admission;
 using ScampusCloud.Repository.Campus;
 using ScampusCloud.Repository.CardStatus;
+using ScampusCloud.Repository.College;
+using ScampusCloud.Repository.Country;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Utility;
 using System;
@@ -19,6 +21,9 @@ namespace ScampusCloud.Controllers
         AdmissionModel Admission = new AdmissionModel();
         CampusModel Campus = new CampusModel();
         CardStatusModel CardStatus = new CardStatusModel();
+        CollegeModel College = new CollegeModel();
+        CountryModel Country = new CountryModel();
+        
         public RemoteValidationController()
         {
         }
@@ -181,6 +186,7 @@ namespace ScampusCloud.Controllers
 
         }
         #endregion
+
         #region CardStatus
         [HttpPost]
         public ActionResult IsCardStatusCodeExist(string Code = "")
@@ -213,6 +219,72 @@ namespace ScampusCloud.Controllers
 
         }
         #endregion
-        
+
+        #region College
+        [HttpPost]
+        public ActionResult IsCollegeCodeExist(string Code = "")
+        {
+            CollegeRepository _Repository = new CollegeRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                College.ActionType = "Remote";
+                College.Code = Code;
+                College.CompanyId = SessionManager.CompanyId;
+                College = _Repository.AddEdit_College(College);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                College.ActionType = "Remote";
+                College.Code = Code;
+                College.CompanyId = SessionManager.CompanyId;
+                College = _Repository.AddEdit_College(College);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (College == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region Country
+        [HttpPost]
+        public ActionResult IsCountryCodeExist(string Code = "")
+        {
+            CountryRepository _Repository = new CountryRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                Country.ActionType = "Remote";
+                Country.Code = Code;
+                Country.CompanyId = SessionManager.CompanyId;
+                Country = _Repository.AddEdit_Country(Country);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Country.ActionType = "Remote";
+                Country.Code = Code;
+                Country.CompanyId = SessionManager.CompanyId;
+                Country = _Repository.AddEdit_Country(Country);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (Country == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
     }
 }

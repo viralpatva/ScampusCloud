@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_CountryModel != null)
                     {
                         _CountryModel.IsEdit = true;
-                        
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _CountryModel.Code;   
                     }
                     else
                     {
                         _CountryModel = new CountryModel();
                         ViewBag.NoRecordExist = true;
                         _CountryModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _CountryModel.IsEdit = false;
                     _CountryModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_CountryModel);
             }

@@ -24,15 +24,22 @@ namespace ScampusCloud.Repository.College
 					StoredProcedureName = @"SP_College_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _CollegeModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _CollegeModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _CollegeModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ScampusId", _CollegeModel.ScampusId, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Code", _CollegeModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _CollegeModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _CollegeModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _CollegeModel.ModifiedBy, DataTypes.Text, false);
+				if (_CollegeModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _CollegeModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CollegeModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _CollegeModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _CollegeModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CollegeModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ScampusId", _CollegeModel.ScampusId, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Code", _CollegeModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _CollegeModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _CollegeModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _CollegeModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _CollegeModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<CollegeModel>(objQueryBuilder);
