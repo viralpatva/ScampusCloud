@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_CardStatusModel != null)
                     {
                         _CardStatusModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _CardStatusModel.Code;
                     }
                     else
                     {
                         _CardStatusModel = new CardStatusModel();
                         ViewBag.NoRecordExist = true;
                         _CardStatusModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _CardStatusModel.IsEdit = false;
                     _CardStatusModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_CardStatusModel);
             }

@@ -1,6 +1,7 @@
 ﻿using ScampusCloud.Models;
 using ScampusCloud.Repository.Admission;
 using ScampusCloud.Repository.Campus;
+using ScampusCloud.Repository.CardStatus;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Utility;
 using System;
@@ -17,6 +18,7 @@ namespace ScampusCloud.Controllers
         StaffModel Staff = new StaffModel();
         AdmissionModel Admission = new AdmissionModel();
         CampusModel Campus = new CampusModel();
+        CardStatusModel CardStatus = new CardStatusModel();
         public RemoteValidationController()
         {
         }
@@ -179,5 +181,38 @@ namespace ScampusCloud.Controllers
 
         }
         #endregion
+        #region CardStatus
+        [HttpPost]
+        public ActionResult IsCardStatusCodeExist(string Code = "")
+        {
+            CardStatusRepository _Repository = new CardStatusRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                CardStatus.ActionType = "Remote";
+                CardStatus.Code = Code;
+                CardStatus.CompanyId = SessionManager.CompanyId;
+                CardStatus = _Repository.AddEdit_CardStatus(CardStatus);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                CardStatus.ActionType = "Remote";
+                CardStatus.Code = Code;
+                CardStatus.CompanyId = SessionManager.CompanyId;
+                CardStatus = _Repository.AddEdit_CardStatus(CardStatus);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (CardStatus == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+        
     }
 }

@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.CardStatus
 					StoredProcedureName = @"SP_CardStatus_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _CardStatusModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _CardStatusModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _CardStatusModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _CardStatusModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _CardStatusModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _CardStatusModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _CardStatusModel.ModifiedBy, DataTypes.Text, false);
+				if (_CardStatusModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _CardStatusModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CardStatusModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _CardStatusModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _CardStatusModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CardStatusModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _CardStatusModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _CardStatusModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _CardStatusModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _CardStatusModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _CardStatusModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<CardStatusModel>(objQueryBuilder);
