@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.JobTitle
 					StoredProcedureName = @"SP_JobTitle_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _JobTitleModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _JobTitleModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _JobTitleModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _JobTitleModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _JobTitleModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _JobTitleModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _JobTitleModel.ModifiedBy, DataTypes.Text, false);
+				if (_JobTitleModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _JobTitleModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _JobTitleModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _JobTitleModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _JobTitleModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _JobTitleModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _JobTitleModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _JobTitleModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _JobTitleModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _JobTitleModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _JobTitleModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<JobTitleModel>(objQueryBuilder);

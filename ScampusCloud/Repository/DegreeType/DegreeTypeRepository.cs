@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.DegreeType
 					StoredProcedureName = @"SP_DegreeType_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _DegreeTypeModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _DegreeTypeModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _DegreeTypeModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _DegreeTypeModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _DegreeTypeModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _DegreeTypeModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _DegreeTypeModel.ModifiedBy, DataTypes.Text, false);
+				if (_DegreeTypeModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _DegreeTypeModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _DegreeTypeModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _DegreeTypeModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _DegreeTypeModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _DegreeTypeModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _DegreeTypeModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _DegreeTypeModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _DegreeTypeModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _DegreeTypeModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _DegreeTypeModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<DegreeTypeModel>(objQueryBuilder);

@@ -5,6 +5,8 @@ using ScampusCloud.Repository.CardStatus;
 using ScampusCloud.Repository.College;
 using ScampusCloud.Repository.Country;
 using ScampusCloud.Repository.Customer;
+using ScampusCloud.Repository.DegreeType;
+using ScampusCloud.Repository.JobTitle;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Utility;
 using System;
@@ -25,6 +27,8 @@ namespace ScampusCloud.Controllers
         CollegeModel College = new CollegeModel();
         CountryModel Country = new CountryModel();
         CustomerModel Customer = new CustomerModel();
+        DegreeTypeModel DegreeType = new DegreeTypeModel();
+        JobTitleModel JobTitle = new JobTitleModel();
         
 
         public RemoteValidationController()
@@ -322,5 +326,70 @@ namespace ScampusCloud.Controllers
         }
         #endregion
 
+        #region DegreeType
+        [HttpPost]
+        public ActionResult IsDegreeTypeCodeExist(string Code = "")
+        {
+            DegreeTypeRepository _Repository = new DegreeTypeRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                DegreeType.ActionType = "Remote";
+                DegreeType.Code = Code;
+                DegreeType.CompanyId = SessionManager.CompanyId;
+                DegreeType = _Repository.AddEdit_DegreeType(DegreeType);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                DegreeType.ActionType = "Remote";
+                DegreeType.Code = Code;
+                DegreeType.CompanyId = SessionManager.CompanyId;
+                DegreeType = _Repository.AddEdit_DegreeType(DegreeType);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (DegreeType == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region JobTitle
+        [HttpPost]
+        public ActionResult IsJobTitleCodeExist(string Code = "")
+        {
+            JobTitleRepository _Repository = new JobTitleRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                JobTitle.ActionType = "Remote";
+                JobTitle.Code = Code;
+                JobTitle.CompanyId = SessionManager.CompanyId;
+                JobTitle = _Repository.AddEdit_JobTitle(JobTitle);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                JobTitle.ActionType = "Remote";
+                JobTitle.Code = Code;
+                JobTitle.CompanyId = SessionManager.CompanyId;
+                JobTitle = _Repository.AddEdit_JobTitle(JobTitle);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (JobTitle == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
     }
 }

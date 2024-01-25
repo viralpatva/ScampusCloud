@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_JobTitleModel != null)
                     {
                         _JobTitleModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _JobTitleModel.Code;
                     }
                     else
                     {
                         _JobTitleModel = new JobTitleModel();
                         ViewBag.NoRecordExist = true;
                         _JobTitleModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _JobTitleModel.IsEdit = false;
                     _JobTitleModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_JobTitleModel);
             }

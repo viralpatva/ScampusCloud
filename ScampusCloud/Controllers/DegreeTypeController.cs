@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_DegreeTypeModel != null)
                     {
                         _DegreeTypeModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _DegreeTypeModel.Code;
                     }
                     else
                     {
                         _DegreeTypeModel = new DegreeTypeModel();
                         ViewBag.NoRecordExist = true;
                         _DegreeTypeModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _DegreeTypeModel.IsEdit = false;
                     _DegreeTypeModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_DegreeTypeModel);
             }
