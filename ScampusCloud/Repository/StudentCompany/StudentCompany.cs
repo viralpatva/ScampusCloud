@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.StudentCompany
 					StoredProcedureName = @"SP_StudentCompany_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _StudentCompanyModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _StudentCompanyModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _StudentCompanyModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _StudentCompanyModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _StudentCompanyModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _StudentCompanyModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _StudentCompanyModel.ModifiedBy, DataTypes.Text, false);
+				if (_StudentCompanyModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _StudentCompanyModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StudentCompanyModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _StudentCompanyModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _StudentCompanyModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StudentCompanyModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _StudentCompanyModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _StudentCompanyModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _StudentCompanyModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _StudentCompanyModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _StudentCompanyModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<StudentCompanyModel>(objQueryBuilder);

@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_VisitorReasonModel != null)
                     {
                         _VisitorReasonModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _VisitorReasonModel.Code;
                     }
                     else
                     {
                         _VisitorReasonModel = new VisitorReasonModel();
                         ViewBag.NoRecordExist = true;
                         _VisitorReasonModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _VisitorReasonModel.IsEdit = false;
                     _VisitorReasonModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_VisitorReasonModel);
             }

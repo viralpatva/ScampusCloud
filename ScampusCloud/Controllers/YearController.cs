@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_YearModel != null)
                     {
                         _YearModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _YearModel.Code;
                     }
                     else
                     {
                         _YearModel = new YearModel();
                         ViewBag.NoRecordExist = true;
                         _YearModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _YearModel.IsEdit = false;
                     _YearModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_YearModel);
             }

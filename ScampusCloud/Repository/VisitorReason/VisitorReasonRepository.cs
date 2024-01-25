@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.VisitorReason
 					StoredProcedureName = @"SP_VisitorReason_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _VisitorReasonModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _VisitorReasonModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _VisitorReasonModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _VisitorReasonModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _VisitorReasonModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _VisitorReasonModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _VisitorReasonModel.ModifiedBy, DataTypes.Text, false);
+				if (_VisitorReasonModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _VisitorReasonModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _VisitorReasonModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _VisitorReasonModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _VisitorReasonModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _VisitorReasonModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _VisitorReasonModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _VisitorReasonModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _VisitorReasonModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _VisitorReasonModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _VisitorReasonModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<VisitorReasonModel>(objQueryBuilder);

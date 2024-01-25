@@ -10,6 +10,13 @@ using ScampusCloud.Repository.JobTitle;
 using ScampusCloud.Repository.Program;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Repository.StaffDepartment;
+using ScampusCloud.Repository.StudentCompany;
+using ScampusCloud.Repository.StudentDepartment;
+using ScampusCloud.Repository.StudentFacility;
+using ScampusCloud.Repository.VisitorAccessLevel;
+using ScampusCloud.Repository.VisitorReason;
+using ScampusCloud.Repository.VisitorType;
+using ScampusCloud.Repository.Year;
 using ScampusCloud.Utility;
 using System;
 using System.Collections.Generic;
@@ -33,7 +40,13 @@ namespace ScampusCloud.Controllers
         JobTitleModel JobTitle = new JobTitleModel();
         ProgramModel Program = new ProgramModel();
         StaffDepartmentModel StaffDepartment = new StaffDepartmentModel();
-        
+        StudentCompanyModel StudentCompany = new StudentCompanyModel();
+        StudentDepartmentModel StudentDepartment = new StudentDepartmentModel();
+        StudentFacilityModel StudentFacility= new StudentFacilityModel();
+        VisitorAccessLevelModel VisitorAccessLevel = new VisitorAccessLevelModel();
+        VisitorReasonModel VisitorReason= new VisitorReasonModel();
+        VisitorTypeModel VisitorType= new VisitorTypeModel();
+        YearModel Year=new YearModel();
 
         public RemoteValidationController()
         {
@@ -455,6 +468,237 @@ namespace ScampusCloud.Controllers
                 returnMsg = $"Code '{Code}' is already in use.";
             }
             if (StaffDepartment == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region StudentCompany
+        [HttpPost]
+        public ActionResult IsStudentCompanyExist(string Code = "")
+        {
+            StudentCompanyRepository _Repository = new StudentCompanyRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                StudentCompany.ActionType = "Remote";
+                StudentCompany.Code = Code;
+                StudentCompany.CompanyId = SessionManager.CompanyId;
+                StudentCompany = _Repository.AddEdit_StudentCompany(StudentCompany);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                StudentCompany.ActionType = "Remote";
+                StudentCompany.Code = Code;
+                StudentCompany.CompanyId = SessionManager.CompanyId;
+                StudentCompany = _Repository.AddEdit_StudentCompany(StudentCompany);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (StudentCompany == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region StudentDepartment
+        [HttpPost]
+        public ActionResult IsStudentDepartmentExist(string Code = "")
+        {
+            StudentDepartmentRepository _Repository = new StudentDepartmentRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                StudentDepartment.ActionType = "Remote";
+                StudentDepartment.Code = Code;
+                StudentDepartment.CompanyId = SessionManager.CompanyId;
+                StudentDepartment = _Repository.AddEdit_StudentDepartment(StudentDepartment);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                StudentDepartment.ActionType = "Remote";
+                StudentDepartment.Code = Code;
+                StudentDepartment.CompanyId = SessionManager.CompanyId;
+                StudentDepartment = _Repository.AddEdit_StudentDepartment(StudentDepartment);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (StudentDepartment == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region StudentFacility
+        [HttpPost]
+        public ActionResult IsStudentFacilityExist(string Code = "")
+        {
+            StudentFacilityRepository _Repository = new StudentFacilityRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                StudentFacility.ActionType = "Remote";
+                StudentFacility.Code = Code;
+                StudentFacility.CompanyId = SessionManager.CompanyId;
+                StudentFacility = _Repository.AddEdit_StudentFacility(StudentFacility);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                StudentFacility.ActionType = "Remote";
+                StudentFacility.Code = Code;
+                StudentFacility.CompanyId = SessionManager.CompanyId;
+                StudentFacility = _Repository.AddEdit_StudentFacility(StudentFacility);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (StudentFacility == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region VisitorAccessLevel
+        [HttpPost]
+        public ActionResult IsVisitorAccessLevelCodeExist(string Code = "")
+        {
+            VisitorAccessLevelRepository _Repository = new VisitorAccessLevelRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                VisitorAccessLevel.ActionType = "Remote";
+                VisitorAccessLevel.Code = Code;
+                VisitorAccessLevel.CompanyId = SessionManager.CompanyId;
+                VisitorAccessLevel = _Repository.AddEdit_VisitorAccessLevel(VisitorAccessLevel);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                VisitorAccessLevel.ActionType = "Remote";
+                VisitorAccessLevel.Code = Code;
+                VisitorAccessLevel.CompanyId = SessionManager.CompanyId;
+                VisitorAccessLevel = _Repository.AddEdit_VisitorAccessLevel(VisitorAccessLevel);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (VisitorAccessLevel == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region VisitorReason
+        [HttpPost]
+        public ActionResult IsVisitorReasonCodeExist(string Code = "")
+        {
+            VisitorReasonRepository _Repository = new VisitorReasonRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                VisitorReason.ActionType = "Remote";
+                VisitorReason.Code = Code;
+                VisitorReason.CompanyId = SessionManager.CompanyId;
+                VisitorReason = _Repository.AddEdit_VisitorReason(VisitorReason);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                VisitorReason.ActionType = "Remote";
+                VisitorReason.Code = Code;
+                VisitorReason.CompanyId = SessionManager.CompanyId;
+                VisitorReason = _Repository.AddEdit_VisitorReason(VisitorReason);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (VisitorReason == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region VisitorType
+        [HttpPost]
+        public ActionResult IsVisitorTypeCodeExist(string Code = "")
+        {
+            VisitorTypeRepository _Repository = new VisitorTypeRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                VisitorType.ActionType = "Remote";
+                VisitorType.Code = Code;
+                VisitorType.CompanyId = SessionManager.CompanyId;
+                VisitorType = _Repository.AddEdit_VisitorType(VisitorType);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                VisitorType.ActionType = "Remote";
+                VisitorType.Code = Code;
+                VisitorType.CompanyId = SessionManager.CompanyId;
+                VisitorType = _Repository.AddEdit_VisitorType(VisitorType);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (VisitorType == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region Year
+        [HttpPost]
+        public ActionResult IsYearCodeExist(string Code = "")
+        {
+            YearRepository _Repository = new YearRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                Year.ActionType = "Remote";
+                Year.Code = Code;
+                Year.CompanyId = SessionManager.CompanyId;
+                Year = _Repository.AddEdit_Year(Year);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Year.ActionType = "Remote";
+                Year.Code = Code;
+                Year.CompanyId = SessionManager.CompanyId;
+                Year = _Repository.AddEdit_Year(Year);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (Year == null)
                 return Json(true);
             else
                 return Json(false);

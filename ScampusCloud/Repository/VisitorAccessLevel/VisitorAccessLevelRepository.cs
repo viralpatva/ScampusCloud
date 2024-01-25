@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.VisitorAccessLevel
 					StoredProcedureName = @"SP_VisitorAccessLevel_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _VisitorAccessLevelModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _VisitorAccessLevelModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _VisitorAccessLevelModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _VisitorAccessLevelModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _VisitorAccessLevelModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _VisitorAccessLevelModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _VisitorAccessLevelModel.ModifiedBy, DataTypes.Text, false);
+				if (_VisitorAccessLevelModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _VisitorAccessLevelModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _VisitorAccessLevelModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _VisitorAccessLevelModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _VisitorAccessLevelModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _VisitorAccessLevelModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _VisitorAccessLevelModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _VisitorAccessLevelModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _VisitorAccessLevelModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _VisitorAccessLevelModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _VisitorAccessLevelModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<VisitorAccessLevelModel>(objQueryBuilder);

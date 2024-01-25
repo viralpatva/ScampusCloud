@@ -24,15 +24,22 @@ namespace ScampusCloud.Repository.StudentDepartment
 					StoredProcedureName = @"SP_StudentDepartment_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _StudentDepartmentModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _StudentDepartmentModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CollegeId", _StudentDepartmentModel.CollegeId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _StudentDepartmentModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _StudentDepartmentModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _StudentDepartmentModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _StudentDepartmentModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _StudentDepartmentModel.ModifiedBy, DataTypes.Text, false);
+				if (_StudentDepartmentModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _StudentDepartmentModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StudentDepartmentModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _StudentDepartmentModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _StudentDepartmentModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CollegeId", _StudentDepartmentModel.CollegeId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StudentDepartmentModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _StudentDepartmentModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _StudentDepartmentModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _StudentDepartmentModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _StudentDepartmentModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _StudentDepartmentModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<StudentDepartmentModel>(objQueryBuilder);

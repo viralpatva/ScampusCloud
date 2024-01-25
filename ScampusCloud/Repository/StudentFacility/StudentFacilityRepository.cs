@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.StudentFacility
 					StoredProcedureName = @"SP_StudentFacility_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _StudentFacilityModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _StudentFacilityModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _StudentFacilityModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _StudentFacilityModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _StudentFacilityModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _StudentFacilityModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _StudentFacilityModel.ModifiedBy, DataTypes.Text, false);
+				if (_StudentFacilityModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _StudentFacilityModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StudentFacilityModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _StudentFacilityModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _StudentFacilityModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StudentFacilityModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _StudentFacilityModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _StudentFacilityModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _StudentFacilityModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _StudentFacilityModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _StudentFacilityModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<StudentFacilityModel>(objQueryBuilder);

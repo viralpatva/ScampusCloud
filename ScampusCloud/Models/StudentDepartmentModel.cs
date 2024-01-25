@@ -25,7 +25,7 @@ namespace ScampusCloud.Models
         public DateTime dtModifiedDate { get; set; }
 
         [Required(ErrorMessage = "Enter Code id")]
-        //[Remote(action: "IsStudentDepartmentIdExist", controller: "RemoteValidation")]
+        [Remote(action: "IsStudentDepartmentCodeExist", controller: "RemoteValidation", HttpMethod = "POST", ErrorMessage = "Code is already in use.")]
         public string Code { get; set; }
         public Guid? CreatedBy { get; set; }
         public Guid? ModifiedBy { get; set; }

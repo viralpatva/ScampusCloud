@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.Year
 					StoredProcedureName = @"SP_Year_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _YearModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _YearModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _YearModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _YearModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _YearModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _YearModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _YearModel.ModifiedBy, DataTypes.Text, false);
+				if (_YearModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _YearModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _YearModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _YearModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _YearModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _YearModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _YearModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _YearModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _YearModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _YearModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _YearModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<YearModel>(objQueryBuilder);

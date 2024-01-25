@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.VisitorType
 					StoredProcedureName = @"SP_VisitorType_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _VisitorTypeModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _VisitorTypeModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _VisitorTypeModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _VisitorTypeModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _VisitorTypeModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _VisitorTypeModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _VisitorTypeModel.ModifiedBy, DataTypes.Text, false);
+				if (_VisitorTypeModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _VisitorTypeModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _VisitorTypeModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _VisitorTypeModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _VisitorTypeModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _VisitorTypeModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _VisitorTypeModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _VisitorTypeModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _VisitorTypeModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _VisitorTypeModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _VisitorTypeModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<VisitorTypeModel>(objQueryBuilder);
