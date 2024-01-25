@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_StaffDepartmentModel != null)
                     {
                         _StaffDepartmentModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _StaffDepartmentModel.Code;
                     }
                     else
                     {
                         _StaffDepartmentModel = new StaffDepartmentModel();
                         ViewBag.NoRecordExist = true;
                         _StaffDepartmentModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _StaffDepartmentModel.IsEdit = false;
                     _StaffDepartmentModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_StaffDepartmentModel);
             }

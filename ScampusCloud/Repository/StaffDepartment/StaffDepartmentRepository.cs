@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.StaffDepartment
 					StoredProcedureName = @"SP_StaffDepartment_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _StaffDepartmentModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _StaffDepartmentModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _StaffDepartmentModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _StaffDepartmentModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _StaffDepartmentModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _StaffDepartmentModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _StaffDepartmentModel.ModifiedBy, DataTypes.Text, false);
+				if (_StaffDepartmentModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _StaffDepartmentModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StaffDepartmentModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _StaffDepartmentModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _StaffDepartmentModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StaffDepartmentModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _StaffDepartmentModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _StaffDepartmentModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _StaffDepartmentModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _StaffDepartmentModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _StaffDepartmentModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<StaffDepartmentModel>(objQueryBuilder);

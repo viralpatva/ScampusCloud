@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_ProgramModel != null)
                     {
                         _ProgramModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _ProgramModel.Code;
                     }
                     else
                     {
                         _ProgramModel = new ProgramModel();
                         ViewBag.NoRecordExist = true;
                         _ProgramModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _ProgramModel.IsEdit = false;
                     _ProgramModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_ProgramModel);
             }

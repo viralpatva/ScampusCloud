@@ -7,7 +7,9 @@ using ScampusCloud.Repository.Country;
 using ScampusCloud.Repository.Customer;
 using ScampusCloud.Repository.DegreeType;
 using ScampusCloud.Repository.JobTitle;
+using ScampusCloud.Repository.Program;
 using ScampusCloud.Repository.Staff;
+using ScampusCloud.Repository.StaffDepartment;
 using ScampusCloud.Utility;
 using System;
 using System.Collections.Generic;
@@ -29,6 +31,8 @@ namespace ScampusCloud.Controllers
         CustomerModel Customer = new CustomerModel();
         DegreeTypeModel DegreeType = new DegreeTypeModel();
         JobTitleModel JobTitle = new JobTitleModel();
+        ProgramModel Program = new ProgramModel();
+        StaffDepartmentModel StaffDepartment = new StaffDepartmentModel();
         
 
         public RemoteValidationController()
@@ -385,6 +389,72 @@ namespace ScampusCloud.Controllers
                 returnMsg = $"Code '{Code}' is already in use.";
             }
             if (JobTitle == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region JobTitle
+        [HttpPost]
+        public ActionResult IsProgramCodeExist(string Code = "")
+        {
+            ProgramRepository _Repository = new ProgramRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                Program.ActionType = "Remote";
+                Program.Code = Code;
+                Program.CompanyId = SessionManager.CompanyId;
+                Program = _Repository.AddEdit_Program(Program);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Program.ActionType = "Remote";
+                Program.Code = Code;
+                Program.CompanyId = SessionManager.CompanyId;
+                Program = _Repository.AddEdit_Program(Program);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (Program == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region StaffDepartment
+        [HttpPost]
+        public ActionResult IsStaffDepartmentExist(string Code = "")
+        {
+            StaffDepartmentRepository _Repository = new StaffDepartmentRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                StaffDepartment.ActionType = "Remote";
+                StaffDepartment.Code = Code;
+                StaffDepartment.CompanyId = SessionManager.CompanyId;
+                StaffDepartment = _Repository.AddEdit_StaffDepartment(StaffDepartment);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                StaffDepartment.ActionType = "Remote";
+                StaffDepartment.Code = Code;
+                StaffDepartment.CompanyId = SessionManager.CompanyId;
+                StaffDepartment = _Repository.AddEdit_StaffDepartment(StaffDepartment);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (StaffDepartment == null)
                 return Json(true);
             else
                 return Json(false);
