@@ -58,17 +58,14 @@ namespace ScampusCloud.Controllers
                     if (_CampusModel != null)
                     {
                         _CampusModel.IsEdit = true;
-
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.Code = _CampusModel.Code;
                     }
                     else
                     {
                         _CampusModel = new CampusModel();
                         ViewBag.NoRecordExist = true;
                         _CampusModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.Code = null;
                     }
                     #endregion
                 }
@@ -81,7 +78,7 @@ namespace ScampusCloud.Controllers
                 {
                     _CampusModel.IsEdit = false;
                     _CampusModel.IsActive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.Code = null;
                 }
                 return View(_CampusModel);
             }

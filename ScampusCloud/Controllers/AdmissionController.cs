@@ -59,9 +59,6 @@ namespace ScampusCloud.Controllers
                     {
                         _AdmissionModel.IsEdit = true;
                         SessionManager.Code = _AdmissionModel.Code;
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
                     }
                     else
                     {

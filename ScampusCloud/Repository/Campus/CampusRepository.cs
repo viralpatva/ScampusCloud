@@ -23,14 +23,21 @@ namespace ScampusCloud.Repository.Campus
 					StoredProcedureName = @"SP_Campus_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
-
-				objQueryBuilder.AddFieldValue("@Id", _CampusModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@Name", _CampusModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _CampusModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Code", _CampusModel.Code, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _CampusModel.IsActive, DataTypes.Boolean, false);
-				objQueryBuilder.AddFieldValue("@CreatedBy", _CampusModel.CreatedBy, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@ModifiedBy", _CampusModel.ModifiedBy, DataTypes.Text, false);
+				if (_CampusModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@Code", _CampusModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CampusModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _CampusModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@Name", _CampusModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CampusModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Code", _CampusModel.Code, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _CampusModel.IsActive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _CampusModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _CampusModel.ModifiedBy, DataTypes.Text, false);
+				}
 				objQueryBuilder.AddFieldValue("@ActionType", _CampusModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<CampusModel>(objQueryBuilder);
