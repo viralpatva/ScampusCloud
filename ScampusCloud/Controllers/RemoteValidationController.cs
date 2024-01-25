@@ -4,6 +4,7 @@ using ScampusCloud.Repository.Campus;
 using ScampusCloud.Repository.CardStatus;
 using ScampusCloud.Repository.College;
 using ScampusCloud.Repository.Country;
+using ScampusCloud.Repository.Customer;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Utility;
 using System;
@@ -23,7 +24,9 @@ namespace ScampusCloud.Controllers
         CardStatusModel CardStatus = new CardStatusModel();
         CollegeModel College = new CollegeModel();
         CountryModel Country = new CountryModel();
+        CustomerModel Customer = new CustomerModel();
         
+
         public RemoteValidationController()
         {
         }
@@ -279,6 +282,39 @@ namespace ScampusCloud.Controllers
                 returnMsg = $"Code '{Code}' is already in use.";
             }
             if (Country == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region Customer
+        [HttpPost]
+        public ActionResult IsCustomerEmailIdExist(string EmailId = "")
+        {
+            CustomerRepository _Repository = new CustomerRepository();
+            string Original_EmailId = SessionManager.EmailId;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_EmailId) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_EmailId, EmailId))
+            {
+                Customer.ActionType = "Remote";
+                Customer.EmailId = EmailId;
+                Customer.CompanyId = SessionManager.CompanyId;
+                Customer = _Repository.AddEdit_Customer(Customer);
+                returnMsg = $"Code '{EmailId}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Customer.ActionType = "Remote";
+                Customer.EmailId = EmailId;
+                Customer.CompanyId = SessionManager.CompanyId;
+                Customer = _Repository.AddEdit_Customer(Customer);
+                returnMsg = $"Code '{EmailId}' is already in use.";
+            }
+            if (Customer == null)
                 return Json(true);
             else
                 return Json(false);

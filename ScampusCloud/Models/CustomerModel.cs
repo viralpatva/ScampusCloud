@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace ScampusCloud.Models
 {
@@ -28,6 +29,7 @@ namespace ScampusCloud.Models
 
 		[Required(ErrorMessage = "Email Address is required")]
 		[RegularExpression(@"^[_a-z0-9-]+(\.[_a-z0-9-]+)*(\+[a-z0-9-]+)?@[a-z0-9-]+(\.[a-z0-9-]+)*$", ErrorMessage = "Invalid Email Address Format")]
+		[Remote(action: "IsCustomerEmailIdExist", controller: "RemoteValidation", HttpMethod = "POST", ErrorMessage = "Customer is already in use.")]
 		public string EmailId { get; set; }
 
 		[Required(ErrorMessage = "Phone Number is required")]

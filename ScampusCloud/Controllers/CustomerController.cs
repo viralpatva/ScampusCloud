@@ -62,16 +62,14 @@ namespace ScampusCloud.Controllers
                     {
                         _CustomerModel.IsEdit = true;
                         _CustomerModel.AdminUserPassword = !string.IsNullOrEmpty(_CustomerModel.AdminUserPassword) ? EncryptionDecryption.GetDecrypt(_CustomerModel.AdminUserPassword) : string.Empty;
-                        //if (model.Code == null)
-                        //    model.Code = "";
-                        //HttpContext.Session.SetString("Original_Id", model.Code);
+                        SessionManager.EmailId = _CustomerModel.EmailId;
                     }
                     else
                     {
                         _CustomerModel = new CustomerModel();
                         ViewBag.NoRecordExist = true;
                         _CustomerModel.Response_Message = "No record found";
-                        //HttpContext.Session.SetString("Original_Id", "");
+                        SessionManager.EmailId = null;
                     }
                     #endregion
                 }
@@ -84,7 +82,7 @@ namespace ScampusCloud.Controllers
                 {
                     _CustomerModel.IsEdit = false;
                     _CustomerModel.Isactive = true;
-                    //HttpContext.Session.SetString("Original_Id", "");
+                    SessionManager.EmailId = null;
                 }
                 return View(_CustomerModel);
             }

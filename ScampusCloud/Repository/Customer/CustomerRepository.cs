@@ -24,21 +24,29 @@ namespace ScampusCloud.Repository.Customer
 					StoredProcedureName = @"SP_Customer_CURD",
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
+				if (_CustomerModel.ActionType == "Remote")
+				{
+					objQueryBuilder.AddFieldValue("@EmailId", _CustomerModel.EmailId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CustomerModel.CompanyId, DataTypes.Text, false);
+				}
+				else
+				{
+					objQueryBuilder.AddFieldValue("@Id", _CustomerModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _CustomerModel.CompanyId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Name", _CustomerModel.Name, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Address", _CustomerModel.Address, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Website", _CustomerModel.Website, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@EmailId", _CustomerModel.EmailId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@PhoneNumber", _CustomerModel.PhoneNumber, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@CreatedBy", _CustomerModel.CreatedBy, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@ModifiedBy", _CustomerModel.ModifiedBy, DataTypes.Text, false);
 
-				objQueryBuilder.AddFieldValue("@Id", _CustomerModel.Id, DataTypes.Numeric, false);
-				objQueryBuilder.AddFieldValue("@CompanyId", _CustomerModel.CompanyId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Name", _CustomerModel.Name, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Address", _CustomerModel.Address, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Website", _CustomerModel.Website, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@EmailId", _CustomerModel.EmailId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@PhoneNumber", _CustomerModel.PhoneNumber, DataTypes.Text, false);
-                objQueryBuilder.AddFieldValue("@CreatedBy", _CustomerModel.CreatedBy, DataTypes.Text, false);
-                objQueryBuilder.AddFieldValue("@ModifiedBy", _CustomerModel.ModifiedBy, DataTypes.Text, false);
-                objQueryBuilder.AddFieldValue("@ActionType", _CustomerModel.ActionType, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@AdminUserEmailId", _CustomerModel.AdminUserEmailId, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@AdminUserPhoneNumber", _CustomerModel.AdminUserPhoneNumber, DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@AdminUserPassword", EncryptionDecryption.GetEncrypt(_CustomerModel.AdminUserPassword), DataTypes.Text, false);
-				objQueryBuilder.AddFieldValue("@Isactive", _CustomerModel.Isactive, DataTypes.Boolean, false);
+					objQueryBuilder.AddFieldValue("@AdminUserEmailId", _CustomerModel.AdminUserEmailId, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@AdminUserPhoneNumber", _CustomerModel.AdminUserPhoneNumber, DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@AdminUserPassword", EncryptionDecryption.GetEncrypt(_CustomerModel.AdminUserPassword), DataTypes.Text, false);
+					objQueryBuilder.AddFieldValue("@Isactive", _CustomerModel.Isactive, DataTypes.Boolean, false);
+				}
+				objQueryBuilder.AddFieldValue("@ActionType", _CustomerModel.ActionType, DataTypes.Text, false);
 
 				return objgm.ExecuteObjectUsingSp<CustomerModel>(objQueryBuilder);
 			}
