@@ -51,7 +51,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 			}
 		}
 
-		public List<StudentDepartmentModel> GetStudentDepartmentList(string searchtxt = "", int page = 1, int pagesize = 10)
+		public List<StudentDepartmentModel> GetStudentDepartmentList(string searchtxt = "", int page = 1, int pagesize = 10, string CompanyId = null)
 		{
 			try
 			{
@@ -64,6 +64,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@page", page, DataTypes.Numeric, false);
 				objQueryBuilder.AddFieldValue("@pagesize", pagesize, DataTypes.Numeric, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.GetListUsingSp<StudentDepartmentModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -73,7 +74,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 			}
 		}
 
-		public string GetAllCount(string searchtxt = "")
+		public string GetAllCount(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -84,6 +85,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 					SetQueryType = QueryBuilder.QueryType.SELECT,
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExcecuteScalarUsingSp(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -94,7 +96,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 
 		}
 
-		public DataTable GetStudentDepartmentData_Export(string searchtxt = "")
+		public DataTable GetStudentDepartmentData_Export(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -105,6 +107,7 @@ namespace ScampusCloud.Repository.StudentDepartment
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExecuteDataTableUsingSp(objQueryBuilder, true);
 			}
 			catch (Exception ex)

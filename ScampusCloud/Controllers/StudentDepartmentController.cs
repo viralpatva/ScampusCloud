@@ -36,7 +36,7 @@ namespace ScampusCloud.Controllers
             if (ViewData["currentPage"] == null)
                 ViewData["currentPage"] = 1;
             string searchtxt = "NA";
-            int totals = Convert.ToInt32(_StudentDepartmentRepository.GetAllCount(searchtxt));
+            int totals = Convert.ToInt32(_StudentDepartmentRepository.GetAllCount(searchtxt, SessionManager.CompanyId.ToString()));
             ViewData["totalrecords"] = totals;
             return View();
         }
@@ -122,8 +122,8 @@ namespace ScampusCloud.Controllers
             try
             {
                 searchtxt = string.IsNullOrEmpty(searchtxt) ? "" : searchtxt;
-                int totals = Convert.ToInt32(_StudentDepartmentRepository.GetAllCount(searchtxt));
-                var lstCountries = _StudentDepartmentRepository.GetStudentDepartmentList(searchtxt, page, pagesize);
+                int totals = Convert.ToInt32(_StudentDepartmentRepository.GetAllCount(searchtxt, SessionManager.CompanyId.ToString()));
+                var lstCountries = _StudentDepartmentRepository.GetStudentDepartmentList(searchtxt, page, pagesize, SessionManager.CompanyId.ToString());
                 Session["totalrecords"] = Convert.ToString(totals);
                 Session["paging_size"] = Convert.ToString(pagesize);
                 ViewData["totalrecords"] = totals;
@@ -238,7 +238,7 @@ namespace ScampusCloud.Controllers
             DataTable dt = new DataTable("StudentDepartment");
             try
             {
-                dt = _StudentDepartmentRepository.GetStudentDepartmentData_Export(searchtxt);
+                dt = _StudentDepartmentRepository.GetStudentDepartmentData_Export(searchtxt, SessionManager.CompanyId.ToString());
                 using (XLWorkbook wb = new XLWorkbook())
                 {
                     wb.Worksheets.Add(dt);

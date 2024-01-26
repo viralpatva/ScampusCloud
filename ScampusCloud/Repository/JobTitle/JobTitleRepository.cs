@@ -49,7 +49,7 @@ namespace ScampusCloud.Repository.JobTitle
 			}
 		}
 
-		public List<JobTitleModel> GetJobTitleList(string searchtxt = "", int page = 1, int pagesize = 10)
+		public List<JobTitleModel> GetJobTitleList(string searchtxt = "", int page = 1, int pagesize = 10, string CompanyId = null)
 		{
 			try
 			{
@@ -62,6 +62,7 @@ namespace ScampusCloud.Repository.JobTitle
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@page", page, DataTypes.Numeric, false);
 				objQueryBuilder.AddFieldValue("@pagesize", pagesize, DataTypes.Numeric, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.GetListUsingSp<JobTitleModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -71,7 +72,7 @@ namespace ScampusCloud.Repository.JobTitle
 			}
 		}
 
-		public string GetAllCount(string searchtxt = "")
+		public string GetAllCount(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -82,6 +83,7 @@ namespace ScampusCloud.Repository.JobTitle
 					SetQueryType = QueryBuilder.QueryType.SELECT,
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExcecuteScalarUsingSp(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -92,7 +94,7 @@ namespace ScampusCloud.Repository.JobTitle
 
 		}
 
-		public DataTable GetJobTitleData_Export(string searchtxt = "")
+		public DataTable GetJobTitleData_Export(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -103,6 +105,7 @@ namespace ScampusCloud.Repository.JobTitle
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExecuteDataTableUsingSp(objQueryBuilder, true);
 			}
 			catch (Exception ex)

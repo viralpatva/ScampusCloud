@@ -49,7 +49,7 @@ namespace ScampusCloud.Repository.StudentCompany
 			}
 		}
 
-		public List<StudentCompanyModel> GetStudentCompanyList(string searchtxt = "", int page = 1, int pagesize = 10)
+		public List<StudentCompanyModel> GetStudentCompanyList(string searchtxt = "", int page = 1, int pagesize = 10, string CompanyId = null)
 		{
 			try
 			{
@@ -62,6 +62,7 @@ namespace ScampusCloud.Repository.StudentCompany
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@page", page, DataTypes.Numeric, false);
 				objQueryBuilder.AddFieldValue("@pagesize", pagesize, DataTypes.Numeric, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.GetListUsingSp<StudentCompanyModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -71,7 +72,7 @@ namespace ScampusCloud.Repository.StudentCompany
 			}
 		}
 
-		public string GetAllCount(string searchtxt = "")
+		public string GetAllCount(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -82,6 +83,7 @@ namespace ScampusCloud.Repository.StudentCompany
 					SetQueryType = QueryBuilder.QueryType.SELECT,
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExcecuteScalarUsingSp(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -92,7 +94,7 @@ namespace ScampusCloud.Repository.StudentCompany
 
 		}
 
-		public DataTable GetStudentCompanyData_Export(string searchtxt = "")
+		public DataTable GetStudentCompanyData_Export(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -103,6 +105,7 @@ namespace ScampusCloud.Repository.StudentCompany
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExecuteDataTableUsingSp(objQueryBuilder, true);
 			}
 			catch (Exception ex)

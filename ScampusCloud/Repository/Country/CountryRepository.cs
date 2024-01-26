@@ -49,7 +49,7 @@ namespace ScampusCloud.Repository.Country
 			}
 		}
 
-		public List<CountryModel> GetCountryList(string searchtxt = "", int page = 1, int pagesize = 10)
+		public List<CountryModel> GetCountryList(string searchtxt = "", int page = 1, int pagesize = 10, string CompanyId = null)
 		{
 			try
 			{
@@ -62,6 +62,7 @@ namespace ScampusCloud.Repository.Country
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
 				objQueryBuilder.AddFieldValue("@page", page, DataTypes.Numeric, false);
 				objQueryBuilder.AddFieldValue("@pagesize", pagesize, DataTypes.Numeric, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.GetListUsingSp<CountryModel>(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -71,7 +72,7 @@ namespace ScampusCloud.Repository.Country
 			}
 		}
 
-		public string GetAllCount(string searchtxt = "")
+		public string GetAllCount(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -82,6 +83,7 @@ namespace ScampusCloud.Repository.Country
 					SetQueryType = QueryBuilder.QueryType.SELECT,
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExcecuteScalarUsingSp(objQueryBuilder);
 			}
 			catch (Exception ex)
@@ -92,7 +94,7 @@ namespace ScampusCloud.Repository.Country
 
 		}
 
-		public DataTable GetCountryData_Export(string searchtxt = "")
+		public DataTable GetCountryData_Export(string searchtxt = "", string CompanyId = null)
 		{
 			try
 			{
@@ -103,6 +105,7 @@ namespace ScampusCloud.Repository.Country
 					SetQueryType = QueryBuilder.QueryType.SELECT
 				};
 				objQueryBuilder.AddFieldValue("@Search", searchtxt, DataTypes.Text, false);
+				objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
 				return objgm.ExecuteDataTableUsingSp(objQueryBuilder, true);
 			}
 			catch (Exception ex)
