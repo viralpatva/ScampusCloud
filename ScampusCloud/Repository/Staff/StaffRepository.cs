@@ -28,6 +28,7 @@ namespace ScampusCloud.Repository.Staff
 				if (_StaffModel.ActionType == "Edit" || _StaffModel.ActionType == "Delete")
 				{
 					objQueryBuilder.AddFieldValue("@Id", _StaffModel.Id, DataTypes.Numeric, false);
+					objQueryBuilder.AddFieldValue("@CompanyId", _StaffModel.CompanyId, DataTypes.Text, false);
 				}
 				else if (_StaffModel.ActionType == "Remote")
 				{

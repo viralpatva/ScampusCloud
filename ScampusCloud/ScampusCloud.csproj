@@ -357,6 +357,7 @@
     <Compile Include="Controllers\StudentFacilityController.cs" />
     <Compile Include="Controllers\VisitorAccessLevelController.cs" />
     <Compile Include="Controllers\VisitorReasonController.cs" />
+    <Compile Include="Controllers\VisitorStatusController.cs" />
     <Compile Include="Controllers\VisitorTypeController.cs" />
     <Compile Include="Controllers\YearController.cs" />
     <Compile Include="DataBase\Database.cs" />
@@ -386,6 +387,7 @@
     <Compile Include="Models\UserModel.cs" />
     <Compile Include="Models\VisitorAccessLevelModel.cs" />
     <Compile Include="Models\VisitorReasonModel.cs" />
+    <Compile Include="Models\VisitorStatusModel.cs" />
     <Compile Include="Models\VisitorTypeModel.cs" />
     <Compile Include="Models\YearModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -406,6 +408,7 @@
     <Compile Include="Repository\StudentFacility\StudentFacilityRepository.cs" />
     <Compile Include="Repository\VisitorAccessLevel\VisitorAccessLevelRepository.cs" />
     <Compile Include="Repository\VisitorReason\VisitorReasonRepository.cs" />
+    <Compile Include="Repository\VisitorStatus\VisitorStatusRepository.cs" />
     <Compile Include="Repository\VisitorType\VisitorTypeRepository.cs" />
     <Compile Include="Repository\Year\YearRepository.cs" />
     <Compile Include="Utility\common.cs" />
@@ -527,6 +530,8 @@
     <Content Include="Views\DegreeType\AddEditDegreeType.cshtml" />
     <Content Include="Views\Admission\Admission.cshtml" />
     <Content Include="Views\Admission\AddEditAdmission.cshtml" />
+    <Content Include="Views\VisitorStatus\VisitorStatus.cshtml" />
+    <Content Include="Views\VisitorStatus\AddEditVisitorStatus.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

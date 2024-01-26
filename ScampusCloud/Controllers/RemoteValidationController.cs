@@ -15,6 +15,7 @@ using ScampusCloud.Repository.StudentDepartment;
 using ScampusCloud.Repository.StudentFacility;
 using ScampusCloud.Repository.VisitorAccessLevel;
 using ScampusCloud.Repository.VisitorReason;
+using ScampusCloud.Repository.VisitorStatus;
 using ScampusCloud.Repository.VisitorType;
 using ScampusCloud.Repository.Year;
 using ScampusCloud.Utility;
@@ -47,6 +48,7 @@ namespace ScampusCloud.Controllers
         VisitorReasonModel VisitorReason= new VisitorReasonModel();
         VisitorTypeModel VisitorType= new VisitorTypeModel();
         YearModel Year=new YearModel();
+        VisitorStatusModel VisitorStatus = new VisitorStatusModel();
 
         public RemoteValidationController()
         {
@@ -76,7 +78,7 @@ namespace ScampusCloud.Controllers
                 Staff = _StaffRepository.AddEdit_Staff(Staff);
                 returnMsg = $"Staff Id '{StaffId}' is already in use.";
             }
-            if (Staff == null)
+            if (Staff.StaffId == null)
                 return Json(true);
             else
                 return Json(false);
@@ -106,7 +108,7 @@ namespace ScampusCloud.Controllers
                 Staff = _StaffRepository.AddEdit_Staff(Staff);
                 returnMsg = $"Email Id '{EmailId}' is already in use.";
             }
-            if (Staff == null)
+            if (Staff.EmailId == null)
                 return Json(true);
             else
                 return Json(false);
@@ -137,7 +139,7 @@ namespace ScampusCloud.Controllers
                 Staff = _StaffRepository.AddEdit_Staff(Staff);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Staff == null)
+            if (Staff.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -170,7 +172,7 @@ namespace ScampusCloud.Controllers
                 Admission = _Repository.AddEdit_Admission(Admission);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Admission == null)
+            if (Admission.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -203,7 +205,7 @@ namespace ScampusCloud.Controllers
                 Campus = _Repository.AddEdit_Campus(Campus);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Campus == null)
+            if (Campus.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -236,7 +238,7 @@ namespace ScampusCloud.Controllers
                 CardStatus = _Repository.AddEdit_CardStatus(CardStatus);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (CardStatus == null)
+            if (CardStatus.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -269,7 +271,7 @@ namespace ScampusCloud.Controllers
                 College = _Repository.AddEdit_College(College);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (College == null)
+            if (College.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -302,7 +304,7 @@ namespace ScampusCloud.Controllers
                 Country = _Repository.AddEdit_Country(Country);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Country == null)
+            if (Country.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -325,7 +327,7 @@ namespace ScampusCloud.Controllers
                 Customer.EmailId = EmailId;
                 Customer.CompanyId = SessionManager.CompanyId;
                 Customer = _Repository.AddEdit_Customer(Customer);
-                returnMsg = $"Code '{EmailId}' is already in use.";
+                returnMsg = $"EmailId '{EmailId}' is already in use.";
             }
             else if (!IsEditMode)
             {
@@ -333,9 +335,9 @@ namespace ScampusCloud.Controllers
                 Customer.EmailId = EmailId;
                 Customer.CompanyId = SessionManager.CompanyId;
                 Customer = _Repository.AddEdit_Customer(Customer);
-                returnMsg = $"Code '{EmailId}' is already in use.";
+                returnMsg = $"EmailId '{EmailId}' is already in use.";
             }
-            if (Customer == null)
+            if (Customer.EmailId == null)
                 return Json(true);
             else
                 return Json(false);
@@ -368,7 +370,7 @@ namespace ScampusCloud.Controllers
                 DegreeType = _Repository.AddEdit_DegreeType(DegreeType);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (DegreeType == null)
+            if (DegreeType.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -401,7 +403,7 @@ namespace ScampusCloud.Controllers
                 JobTitle = _Repository.AddEdit_JobTitle(JobTitle);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (JobTitle == null)
+            if (JobTitle.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -434,7 +436,7 @@ namespace ScampusCloud.Controllers
                 Program = _Repository.AddEdit_Program(Program);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Program == null)
+            if (Program.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -467,7 +469,7 @@ namespace ScampusCloud.Controllers
                 StaffDepartment = _Repository.AddEdit_StaffDepartment(StaffDepartment);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (StaffDepartment == null)
+            if (StaffDepartment.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -500,7 +502,7 @@ namespace ScampusCloud.Controllers
                 StudentCompany = _Repository.AddEdit_StudentCompany(StudentCompany);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (StudentCompany == null)
+            if (StudentCompany.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -533,7 +535,7 @@ namespace ScampusCloud.Controllers
                 StudentDepartment = _Repository.AddEdit_StudentDepartment(StudentDepartment);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (StudentDepartment == null)
+            if (StudentDepartment.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -566,7 +568,7 @@ namespace ScampusCloud.Controllers
                 StudentFacility = _Repository.AddEdit_StudentFacility(StudentFacility);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (StudentFacility == null)
+            if (StudentFacility.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -599,7 +601,7 @@ namespace ScampusCloud.Controllers
                 VisitorAccessLevel = _Repository.AddEdit_VisitorAccessLevel(VisitorAccessLevel);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (VisitorAccessLevel == null)
+            if (VisitorAccessLevel.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -632,7 +634,7 @@ namespace ScampusCloud.Controllers
                 VisitorReason = _Repository.AddEdit_VisitorReason(VisitorReason);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (VisitorReason == null)
+            if (VisitorReason.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -665,7 +667,7 @@ namespace ScampusCloud.Controllers
                 VisitorType = _Repository.AddEdit_VisitorType(VisitorType);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (VisitorType == null)
+            if (VisitorType.Code == null)
                 return Json(true);
             else
                 return Json(false);
@@ -698,7 +700,40 @@ namespace ScampusCloud.Controllers
                 Year = _Repository.AddEdit_Year(Year);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Year == null)
+            if (Year.Code == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region VisitorStatus
+        [HttpPost]
+        public ActionResult IsVisitorStatusCodeExist(string Code = "")
+        {
+            VisitorStatusRepository _Repository = new VisitorStatusRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                VisitorStatus.ActionType = "Remote";
+                VisitorStatus.Code = Code;
+                VisitorStatus.CompanyId = SessionManager.CompanyId;
+                VisitorStatus = _Repository.AddEdit_VisitorStatus(VisitorStatus);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                VisitorStatus.ActionType = "Remote";
+                VisitorStatus.Code = Code;
+                VisitorStatus.CompanyId = SessionManager.CompanyId;
+                VisitorStatus = _Repository.AddEdit_VisitorStatus(VisitorStatus);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (VisitorStatus.Code == null)
                 return Json(true);
             else
                 return Json(false);
