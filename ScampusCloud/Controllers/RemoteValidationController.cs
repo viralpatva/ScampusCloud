@@ -8,6 +8,7 @@ using ScampusCloud.Repository.Customer;
 using ScampusCloud.Repository.DegreeType;
 using ScampusCloud.Repository.JobTitle;
 using ScampusCloud.Repository.Program;
+using ScampusCloud.Repository.Reader;
 using ScampusCloud.Repository.Staff;
 using ScampusCloud.Repository.StaffDepartment;
 using ScampusCloud.Repository.StudentCompany;
@@ -49,6 +50,7 @@ namespace ScampusCloud.Controllers
         VisitorTypeModel VisitorType= new VisitorTypeModel();
         YearModel Year=new YearModel();
         VisitorStatusModel VisitorStatus = new VisitorStatusModel();
+        ReaderModel Reader = new ReaderModel();
 
         public RemoteValidationController()
         {
@@ -304,7 +306,7 @@ namespace ScampusCloud.Controllers
                 Country = _Repository.AddEdit_Country(Country);
                 returnMsg = $"Code '{Code}' is already in use.";
             }
-            if (Country.Code == null)
+            if (Country == null)
                 return Json(true);
             else
                 return Json(false);
@@ -337,7 +339,7 @@ namespace ScampusCloud.Controllers
                 Customer = _Repository.AddEdit_Customer(Customer);
                 returnMsg = $"EmailId '{EmailId}' is already in use.";
             }
-            if (Customer.EmailId == null)
+            if (Customer == null)
                 return Json(true);
             else
                 return Json(false);
@@ -734,6 +736,39 @@ namespace ScampusCloud.Controllers
                 returnMsg = $"Code '{Code}' is already in use.";
             }
             if (VisitorStatus.Code == null)
+                return Json(true);
+            else
+                return Json(false);
+
+        }
+        #endregion
+
+        #region Reader
+        [HttpPost]
+        public ActionResult IsReaderCodeExist(string Code = "")
+        {
+            ReaderRepository _Repository = new ReaderRepository();
+            string Original_Code = SessionManager.Code;
+            bool IsEditMode = !string.IsNullOrEmpty(Original_Code) ? true : false;
+            string returnMsg = "";
+
+            if (IsEditMode && !string.Equals(Original_Code, Code))
+            {
+                Reader.ActionType = "Remote";
+                Reader.Code = Code;
+                Reader.CompanyId = SessionManager.CompanyId;
+                Reader = _Repository.AddEdit_Reader(Reader);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            else if (!IsEditMode)
+            {
+                Reader.ActionType = "Remote";
+                Reader.Code = Code;
+                Reader.CompanyId = SessionManager.CompanyId;
+                Reader = _Repository.AddEdit_Reader(Reader);
+                returnMsg = $"Code '{Code}' is already in use.";
+            }
+            if (Reader == null)
                 return Json(true);
             else
                 return Json(false);

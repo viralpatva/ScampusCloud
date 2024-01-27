@@ -349,6 +349,7 @@
     <Compile Include="Controllers\JobTitleController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\ProgramController.cs" />
+    <Compile Include="Controllers\ReaderController.cs" />
     <Compile Include="Controllers\RemoteValidationController.cs" />
     <Compile Include="Controllers\StaffController.cs" />
     <Compile Include="Controllers\StaffDepartmentController.cs" />
@@ -378,6 +379,7 @@
     <Compile Include="Models\JobTitleModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ProgramModel.cs" />
+    <Compile Include="Models\ReaderModel.cs" />
     <Compile Include="Models\StaffDepartmentModel.cs" />
     <Compile Include="Models\StaffModel.cs" />
     <Compile Include="Models\ResponseMessage.cs" />
@@ -401,6 +403,7 @@
     <Compile Include="Repository\JobTitle\JobTitleRepository.cs" />
     <Compile Include="Repository\Login\LoginRepository.cs" />
     <Compile Include="Repository\Program\ProgramRepository.cs" />
+    <Compile Include="Repository\Reader\ReaderRepository.cs" />
     <Compile Include="Repository\StaffDepartment\StaffDepartmentRepository.cs" />
     <Compile Include="Repository\Staff\StaffRepository.cs" />
     <Compile Include="Repository\StudentCompany\StudentCompany.cs" />
@@ -532,6 +535,8 @@
     <Content Include="Views\Admission\AddEditAdmission.cshtml" />
     <Content Include="Views\VisitorStatus\VisitorStatus.cshtml" />
     <Content Include="Views\VisitorStatus\AddEditVisitorStatus.cshtml" />
+    <Content Include="Views\Reader\Reader.cshtml" />
+    <Content Include="Views\Reader\AddEditReader.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
