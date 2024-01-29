@@ -106,5 +106,20 @@ namespace ScampusCloud.Utility
                 HttpContext.Current.Session["Code"] = value;
             }
         }
+
+        public static String StudentId
+        {
+            get
+            {
+                if (HttpContext.Current.Session["StudentId"] == null)
+                    return null;
+                else
+                    return HttpContext.Current.Session["StudentId"].ToString();
+            }
+            set
+            {
+                HttpContext.Current.Session["StudentId"] = value;
+            }
+        }
     }
 }

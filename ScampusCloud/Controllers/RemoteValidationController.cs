@@ -542,7 +542,7 @@ namespace ScampusCloud.Controllers
 
         #region StudentDepartment
         [HttpPost]
-        public ActionResult IsStudentDepartmentExist(string Code = "")
+        public ActionResult IsStudentDepartmentCodeExist(string Code = "")
         {
             StudentDepartmentRepository _Repository = new StudentDepartmentRepository();
             string Original_Code = SessionManager.Code;
