@@ -273,6 +273,7 @@ namespace ScampusCloud.Repository.Student
             objQueryBuilder.AddFieldValue("@CompanyId", CompanyId, DataTypes.Text, false);
             objQueryBuilder.AddFieldValue("@Id", AdmissionTypeId, DataTypes.Numeric, false);
             return objgm.GetListUsingSp<SelectListItem>(objQueryBuilder);
+
         }
     }
 }
