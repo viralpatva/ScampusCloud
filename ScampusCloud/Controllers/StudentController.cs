@@ -370,6 +370,5 @@ namespace ScampusCloud.Controllers
             return Json(admissionShortTypeNames, JsonRequestBehavior.AllowGet);
         }
         #endregion
-
     }
 }
