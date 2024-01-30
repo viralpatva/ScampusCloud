@@ -303,6 +303,9 @@
     <Content Include="Connection\ConnectionString.txt" />
     <Content Include="Content\Site.css" />
     <Content Include="css\site.css" />
+    <Content Include="DatabaseScript\AdmissionTypeshort Dropdown.txt" />
+    <Content Include="DatabaseScript\College Dropdown.txt" />
+    <Content Include="DatabaseScript\Student Department Dropdown.txt" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Images\loading-squre.gif" />
