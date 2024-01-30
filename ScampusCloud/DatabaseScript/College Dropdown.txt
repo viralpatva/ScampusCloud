@@ -1,0 +1,20 @@
+USE [ScampusCloud]
+GO
+/****** Object:  StoredProcedure [dbo].[Sps_Load_College_Dropdown]    Script Date: 01/30/2024 9:13:49 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+
+
+ALTER PROCEDURE [dbo].[Sps_Load_College_Dropdown]
+@CompanyId nvarchar(100)=''	,
+@ScampusId int =0
+AS
+BEGIN
+	
+	SELECT CONVERT(NVARCHAR(10),Id) as [Value],[Name] AS [Text] FROM Tbl_Mstr_College_Master 
+	WHERE IsActive=1 And CompanyId=@CompanyId and ScampusId=@ScampusId
+
+END
